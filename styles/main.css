@@ -1,0 +1,622 @@
+/* Satrt Body */
+
+/*
+  #101214;
+  #212529;
+  #39393b;
+  #aa8220;
+  #ffffff;
+*/
+:root 
+{
+  --color-BackgroundBody:#101214;
+  --color-BackgroundElement:#212529;
+  --color-InputBoxShadowSelect:#39393b;
+  --color-PrimaryText:#aa8220;
+  --color-SecondaryText:#ffffff;
+}
+
+body {
+  font-family: 'Roboto', 'sans-serif';
+  font-family: 'Almarai', 'sans-serif';
+  font-family: 'Tajawal', 'sans-serif';
+  font-family: 'Cairo', 'sans-serif';
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-BackgroundBody);
+  /* overflow: hidden; */
+}
+
+/* Start Scrollbar */
+
+::-webkit-scrollbar { width: 7px;}
+
+::-webkit-scrollbar-track { background-color: var(--color-BackgroundBody); box-shadow: 0 0.5rem 0.5rem var(--color-BackgroundElement) inset;}
+
+::-webkit-scrollbar-thumb { background-color: var(--color-PrimaryText); border-radius: 20%;}
+
+::-webkit-scrollbar-thumb:hover { background-color: var(--color-SecondaryText);}
+
+#MyMark {z-index: 9999; font-size: xx-small; display: none;}
+
+#scroll-top
+{
+  color: var(--color-PrimaryText);
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
+  z-index: 9999;
+  display: none;
+  cursor: pointer;
+}
+
+#scroll-top:hover {color: var(--color-SecondaryText);}
+
+/* Start Navbar */
+
+.navbar .navbar-brand img{ width: 70px; }
+
+.navbar .user-icon,
+.breadcrumb .breadcrumb-link,
+.navbar-nav .nav-link { color: var(--color-PrimaryText); }
+
+.navbar .dropdown-menu .dropdown-item,
+.breadcrumb .breadcrumb-link:hover,
+.breadcrumb .breadcrumb-link.active,
+.navbar a:hover,
+.navbar .user-icon:hover,
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover { color: var(--color-SecondaryText) !important; }
+
+.dropdown-item:hover, .dropdown-item:focus { background-color: rgba(255, 255, 255, 0.15); padding-left:25px }
+
+.dropdown-hover:hover>.dropdown-menu { display: inline-block; }
+
+.dropdown-hover>.dropdown-toggle:active { pointer-events: none; }
+
+/*
+***********************************
+******** Start Offcanvas ********** 
+***********************************
+*/
+
+.offcanvas.offcanvas-start, .offcanvas .offcanvas-body .accordion-item { width: 20rem;}
+
+.offcanvas .offcanvas-header { background-image: url("../photos/cloud.webp") !important; }
+
+/*
+********************************
+****** Group SeconderText ******
+********************************
+*/
+.MyProfile #CustomAccountImage,
+.SectionEvaluation,
+.section-flat-evaluation,
+.section-flat-feature,
+.section-booking-now,
+.section-booking-now .Phone,
+.section-single-flat,
+.SectionFlatsShow,.SectionAbout,
+.SectionFlatsShow .accordion-button,
+.SectionFlatsShow .card-footer a, /* HomePage */
+.SiteSettings #CustomImageLogo,
+.navbar-toggler, /* Navbar */
+.offcanvas .offcanvas-header h5,
+.offcanvas .nav-link,
+.offcanvas .offcanvas-body .accordion-item .one,
+.pageLogin, .NotFound, .MyProfile, .MyProfile .Phone, .SiteSettings, .statsAdmin, .statsAdmin .card-footer a,
+.table-customize-employees, .table-customize-floor, .modal-body .content /* .table-customize-floor */,
+.table-customize-flat, .SectionAddFlat, .SectionAddFlat .FormNewFlat, .ComfirmAddFeatureToFlat .modal-content,
+.table-customize-feature, .CostumizeModalFeature .modal-content /* .table-customize-feature */,
+.table-customize-employees, .CostumizeModalEmployees .modal-content /* CostumizeModalEmployees */,
+.table-customize-services, .ComfirmAddService, /* .table-customize-services */
+.accordionAddFeaturesFlat .accordion-item, .accordionAddFeaturesFlat .accordion-button /* Flat Page */ { color: var(--color-SecondaryText); }
+
+.modal-footer, .card-footer { border-top-color: var(--color-SecondaryText);}
+
+.modal-header { border-bottom-color: var(--color-SecondaryText);}
+
+.offcanvas .user-icon { width: 70px; height: 70px; font-size: 3rem; }
+
+.navbar .dropdown-menu .dropdown-item.active,
+.offcanvas .user-icon,
+.offcanvas .offcanvas-body .accordion-item .one:hover,
+.offcanvas-body .accordion-button:hover::after,
+.offcanvas-body .accordion-button.active::after,
+.offcanvas .offcanvas-body .accordion-item .one.active,
+.offcanvas .offcanvas-body .accordion-item .one[aria-expanded=true],
+.offcanvas .nav-link:hover,
+.offcanvas .offcanvas-body .nav-link.active {
+  color: var(--color-PrimaryText) !important;
+  background-color: var(--color-BackgroundBody) !important;
+}
+
+.offcanvas-body .accordion-item .RemoveHover.active,
+.offcanvas-body .accordion-item .RemoveHover:hover { background-color: transparent !important ;}
+
+.SectionFlatsShow .accordion-button::after,
+.offcanvas-body .accordion-button::after {
+  font: var(--fa-font-solid);
+  content: "\f078";
+  background-image: none;
+  color: var(--color-SecondaryText);
+}
+
+.SectionFlatsShow .accordion-button:not(.collapsed)::after,
+.offcanvas-body .accordion-button:not(.collapsed)::after {
+  font: var(--fa-font-solid);
+  content: "\f078";
+  background-image: none;
+  color: var(--color-PrimaryText);
+}
+
+.offcanvas .offcanvas-footer { width: 100%;}
+
+.ImgLogIn { margin-left: 0 !important;}
+
+@media (max-width: 575.98px) { .navbar .side { position: fixed; top: 35px; } }
+
+@media (min-width: 576px) and (max-width: 991px) { .navbar .side { position: fixed; top: 35px; } }
+
+/* End Navbar */
+
+/* Start Login */
+
+.pageLogin { background: url(../photos/hotel.webp) no-repeat center center fixed !important; background-size: cover; }
+
+.pageLogin .overlay { background-color: rgba(0, 0, 0, .2); padding: 30px; }
+
+.pageLogin .Formlogin { width: 300px; }
+
+.pageLogin .Formlogin .form-control { box-shadow: 0 0.5rem 1rem var(--color-InputBoxShadowSelect) inset; }
+
+.pageLogin .Formlogin .btn {
+  background-color: var(--color-PrimaryText);
+  border-color: var(--color-PrimaryText);
+  color: var(--color-SecondaryText);
+}
+
+/* Customize Msg Error */
+.Formlogin .form-control,
+#FlatsCard .alert-danger,
+.pageLogin .alert-danger {
+  color: var(--color-SecondaryText) !important;
+  background-color: #10121499 !important;
+  border-color: #10121499 !important;
+}
+
+.section-flat-evaluation #btnReadMore,
+#FlatsCard .ErrorLogIn,
+.pageLogin .ErrorLogIn { color: var(--color-PrimaryText); }
+
+/* End Login */
+
+/* Start Index Admin */
+
+.statsAdmin .card { transition: all 0.3s ease-in-out; }
+
+/*
+***************************
+** Customize Box Shadow **
+***************************
+*/
+.settingsForm,
+.pageLogin .Formlogin .btn:hover,
+.pageLogin .Formlogin .btn:focus,
+.SectionFlatsShow .card:hover,
+.navBredcrumb,
+.statsAdmin .card:hover { box-shadow: 0 0.5rem 1rem var(--color-InputBoxShadowSelect);}
+
+/* End Index Admin */
+
+/* Start Settings Admin */
+
+.MyProfile .ImageAccount{ height: 200px !important;}
+
+.FormSiteStyle .DisplayImage { width: 250px; }
+
+/*
+**********************************
+********** Nav & Tab *************
+**********************************
+*/
+.nav-tabs { border-bottom-color: var(--color-SecondaryText) !important; }
+
+.nav-tabs .nav-link.active {
+  color: var(--color-SecondaryText);
+  background-color: var(--color-BackgroundElement);
+  border-bottom: none;
+  border-color: var(--color-SecondaryText);
+}
+
+.nav-tabs .nav-link { color: var(--color-PrimaryText); }
+
+.nav-tabs .nav-link:focus { border-bottom: none; }
+
+.nav-tabs .nav-link:hover { color: var(--color-SecondaryText); border-color: var(--color-SecondaryText);}
+
+/*
+  ********************************
+  ** Customize Input Type Color **
+  ********************************
+*/
+input[type = "color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 75%;
+  background-color: transparent !important;
+  border: none;
+}
+
+input[type = 'color']::-webkit-color-swatch-wrapper { padding: 0; }
+
+input[type = 'color']::-webkit-color-swatch { border-radius: 5px; box-shadow: 0 0 20px 5px #0000002a; }
+
+input[type = 'color']::-moz-color-swatch { border-radius: 5px; box-shadow: 0 0 20px 5px #0000002a; }
+
+.FormSiteStyle .ThemeColor { text-align: -webkit-center; }
+
+.FormSiteStyle .Theme { content: ''; width: 50px; height: 50px; border: 1px solid black; }
+
+.FormSiteStyle .dropzone { background: var(--color-BackgroundBody) !important; border: 2px  dashed var(--color-SecondaryText) !important;}
+
+.FormSiteStyle .dropzone .dz-preview.dz-image-preview { background: transparent;}
+
+.FormSiteStyle .dropzone .dz-image-preview .dz-remove { color: var(--color-SecondaryText);}
+
+.FormSiteStyle .dzImage {
+  -webkit-transition: .5s ease;
+  -moz-transition: .5s ease;
+  -ms-transition: .5s ease;
+  -o-transition: .5s ease;
+  transition: .5s ease;
+}
+
+.FormSiteStyle .dzRemoveImg {
+  opacity: 0;
+  /*min-width: 90%;
+  max-width: 90%;*/
+  -webkit-transition: opacity .2s linear;
+  -moz-transition: opacity .2s linear;
+  -ms-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear;
+}
+
+.FormSiteStyle .dzImgPreview:hover .dzImage { opacity: 0.3; }
+
+.FormSiteStyle .dzImgPreview:hover .dzRemoveImg { opacity: 1; }
+
+/* @media (max-width: 575.98px) { .FormSiteStyle .dzRemoveImg { padding: 50px 0px 50px 20px !important; margin: 10px 0px !important;} }
+
+@media (min-width: 576px) { .FormSiteStyle .dzRemoveImg { padding: 30px 0 !important; margin: 10px 0 !important;} }
+
+@media (min-width: 991px) { .FormSiteStyle .dzRemoveImg { padding: 40px 0 !important;} } */
+
+.FormSiteStyle .slick-arrow::before { color: var(--color-SecondaryText);}
+
+/* End Settings Admin */
+
+/* Start Floors Admin */
+
+/*
+  * Customize Bottom Processes
+*/
+.AddImages:hover,
+.EditFlatInfo:hover,
+.save:hover,
+.Cancel:hover,
+.DeleteAnyServices:hover,
+.DeleteAnyFeatureFromFlat:hover,
+.LinkShowFlats:hover,
+.LinkShowFlat:hover,
+.DeleteAnyFlat:hover,
+.DeleteAnyFeature:hover,
+.EditAnyFeature:hover,
+.EditAnyEmployee:hover,
+.BlockAnyEmployee:hover { color: var(--color-SecondaryText) !important; }
+
+.containerMainImageAndDelete .MainImage,
+.SectionFlatsShow .card-body svg,
+.ButtonFormAddServices:hover,
+.BottomAddFeatuerToFlat:hover,
+.table-customize-floor .ButtonAddFloor:hover,
+.table-customize-floor .ButtonRemoveFloor:hover,
+.table-customize-floor .ShowFlat:hover,
+.table-customize-flat .ButtonFormAddFlat:hover,
+.table-customize-feature .ButtonFormFeature:hover,
+.table-customize-employees .ButtonFormEmployees:hover {color: var(--color-PrimaryText);}
+
+.accordion-body .FormSearch .fa-star { cursor: pointer;} 
+
+.fa-star { color: #aa8220 !important;}
+
+/* End Floors Admin */
+
+/* Start Add Flat */
+
+/*
+  ********************************
+  ****** Customize Input *********
+  ********************************
+*/
+input:not([type = 'color']),
+textarea,
+select { 
+background-color: var(--color-InputBoxShadowSelect) !important;
+color: var(--color-SecondaryText) !important;
+border:none !important;
+}
+
+.SectionFlatsShow select,
+.FormAddFeature select,
+.FormNewService select,
+.FormNewFeature select,
+.FormNewFlat #View,
+.section-single-flat select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23FFFFFF'%3E%3Cpath d='M18.2 7.6c-.4 0-.7.1-.9.4L13 12.6c-.5.5-1.4.5-1.9 0L6.8 8c-.3-.2-.6-.4-1-.4-1.1 0-1.7 1.3-.9 2.1l6.2 6.8c.5.6 1.4.6 1.9 0l6.2-6.8c.6-.8 0-2.1-1-2.1z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E") !important;
+  background-size: 20px 20px !important;
+  cursor: pointer;
+  pointer-events: painted;
+}
+
+select:disabled { cursor: default;}
+
+/*
+  ***********************************
+  ******** Customize Number *********
+  ***********************************
+*/
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*
+  *****************************
+  ******* Customize Flie ******
+  *****************************
+*/
+input[type='file']::-webkit-file-upload-button { display: none; }
+
+.uploadImg {
+  cursor: pointer;
+  background: var(--color-InputBoxShadowSelect) !important;
+  border: 1px solid var(--color-InputBoxShadowSelect) !important;
+  color: var(--color-SecondaryText) !important;
+}
+
+.FormNewFlat .lineBeforFeature::after{
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: var(--color-PrimaryText);
+  margin: 20px 0
+}
+
+/*
+  *********************************
+  ******** Customize Modal ********
+  *********************************
+*/
+.blur { filter: blur(5px);}
+
+/* End Add Flat */
+
+/* Start Single Flat Style */
+
+.section-single-flat input {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--color-InputBoxShadowSelect) !important;
+}
+.section-single-flat select#Floor {
+  background-color: var(--color-BackgroundElement) !important;
+  border-bottom: 1px solid var(--color-InputBoxShadowSelect) !important;
+}
+
+.section-single-flat select#View {
+  background-color: var(--color-BackgroundBody) !important;
+  border-bottom: 1px solid var(--color-InputBoxShadowSelect) !important;
+}
+
+.containerMainImageAndDelete { border: 1px solid var(--color-PrimaryText);}
+
+.section-single-flat .EditMainImg,
+.section-single-flat .RemoveImgFromFlat {
+  opacity: 0;
+  -webkit-transition: opacity .2s linear;
+  -moz-transition: opacity .2s linear;
+  -ms-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear;
+}
+
+.section-single-flat .containerMainImageAndDelete:hover .EditMainImg,
+.section-single-flat .containerImageAndDelete:hover .RemoveImgFromFlat { opacity: 1; }
+
+.section-booking-now input[type = 'Date'] { cursor: pointer; }
+
+.fc-prev-button, .fc-prev-button:hover, .fc-prev-button:active, .fc-prev-button:focus,
+.fc-next-button, .fc-next-button:hover, .fc-next-button:active, .fc-next-button:focus,
+.fc-today-button, .fc-today-button:hover, .fc-today-button:active, .fc-today-button:focus
+{background-color: #1a1a1a !important; border-color: #1a1a1a !important; box-shadow: none !important;}
+
+.fc-daygrid-day.fc-day-today {background-color: var(--color-PrimaryText) !important;}
+
+.section-flat-evaluation #more {display: none;}
+
+.section-flat-evaluation #btnReadMore { cursor: pointer;}
+
+/* End Single Flat Style */
+
+/* Start Home Page */
+
+.Carousel .CarouselMoving {
+  width: 15px !important;
+  height: 15px !important;
+  border: 1px solid black !important;
+  border-radius: 50% !important;
+}
+
+.SectionEvaluation h1::after,
+.section-flat-evaluation h1::after,
+.section-booking-now h1::after,
+.section-flat-feature h1::after,
+.section-single-flat h1::after,
+.SectionFlatsShow h1::after,
+.SectionAbout h1::after{
+  content: '';
+  display: block;
+  width: 65px;
+  height: 3px;
+  background-color: var(--color-PrimaryText);
+  margin: 15px auto;
+}
+
+.SectionFlatsShow .Pagination { border: 1px solid var(--color-PrimaryText); color: var(--color-SecondaryText);}
+
+.SectionFlatsShow .Pagination:hover{ color: var(--color-PrimaryText);}
+
+.SectionFlatsShow .active { background-color: var(--color-BackgroundElement); color: var(--color-PrimaryText);}
+
+/* End Home Page */
+
+/* Start Footer */
+
+.footer::before { 
+  content: '';
+  display: block;
+  height: 2px;
+  background-color: var(--color-PrimaryText);
+  margin: 0 20px
+}
+
+.footer, .footer a { color: var(--color-PrimaryText); }
+
+.footer .social-list li { display: inline-flex; opacity:0.7; transition: all .3s ease-in-out; }
+
+.footer .social-list li:hover {opacity:1}
+
+.footer a:hover {
+  color: var(--color-SecondaryText);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/* End Footer */
+
+/*
+  ****************************************
+  ****** Group BackgroundElement *********
+  ****************************************
+*/
+.MyProfile #CustomAccountImage,
+.navbar .dropdown-menu,
+.section-single-flat .bgDark,
+.SiteSettings #CustomImageLogo,
+.navbar, .offcanvas, .modal-content, .navbar .user-icon, .offcanvas .user-icon,
+.offcanvas .offcanvas-body .nav-link,
+.offcanvas .offcanvas-footer,
+.offcanvas .offcanvas-body  .accordion-item ,
+.offcanvas .offcanvas-body .accordion-item .one,
+.SectionFlatsShow .accordion-button,
+.SectionFlatsShow .accordion-item,
+.card, .accordionAddFeaturesFlat .accordion-item, .accordionAddFeaturesFlat .accordion-button{
+  background-color: var(--color-BackgroundElement);
+}
+
+/*
+*******************************************
+*************** Js Table ******************
+*******************************************
+*/
+.dt-container{
+  position:relative;
+  display:block;
+  width:100%;
+  overflow-x:auto;
+  overflow-y:hidden
+}
+
+.dt-container .dt-message{text-align:center}
+
+.dt-top,.dt-bottom{padding:8px 0;display:flex;justify-content:space-between}
+
+.dt-dropdown, .dt-bottom, .dt-pagination ul { color: var(--color-SecondaryText);}
+
+.dt-top .dt-selector, .dt-bottom .dt-selector{ padding:4px; cursor: pointer;}
+
+.dt-top .dt-selector:focus, .dt-bottom .dt-selector:focus, .dt-input:focus{ outline: none; }
+
+.dt-top .dt-info,.dt-bottom .dt-info{margin:7px 0}
+
+.dt-input{ padding:6px 12px; }
+
+.dt-pagination ul{margin:0;padding-left:0}
+
+.dt-pagination ul li{list-style:none;float:left}
+
+.dt-pagination a,.dt-pagination span{
+  border:1px solid transparent;
+  float:left;
+  margin-left:2px;
+  padding:6px 12px;
+  position:relative;
+  text-decoration:none;
+  color:inherit
+}
+
+.dt-pagination a:hover{ color: var(--color-PrimaryText); }
+
+.dt-pagination .active a,.dt-pagination .active a:focus,.dt-pagination .active a:hover{ color: var(--color-PrimaryText); }
+
+.dt-pagination .dt-ellipsis span{cursor:not-allowed}
+
+.dt-pagination .disabled a,.dt-pagination .disabled a:focus,.dt-pagination .disabled a:hover{ cursor:not-allowed; opacity:0.4 }
+
+.dt-table{max-width:100%;width:100%;border-spacing:0}
+
+.dt-table>tbody>tr>td,
+.dt-table>tbody>tr>th,
+.dt-table>tfoot>tr>td,
+.dt-table>tfoot>tr>th,
+.dt-table>thead>tr>td,
+.dt-table>thead>tr>th{
+  vertical-align:top;
+  /* padding:8px 10px; */
+  white-space:nowrap
+}
+
+.dt-table>thead>tr>th,.dt-table>thead>tr>td{
+  vertical-align:bottom;
+  text-align:left;
+  border-bottom:1px solid var(--color-SecondaryText)
+}
+
+.dt-table th.dt-sorter{
+  position:relative;
+  cursor:pointer;
+  /* padding-right:20px */
+}
+
+.dt-table th.dt-sorter::before,.dt-table th.dt-sorter::after{
+  content:"";
+  height:0;
+  width:0;
+  position:absolute;
+  right:7px;
+  border-left:4px solid transparent;
+  border-right:4px solid transparent;
+  opacity:0.2
+}
+
+.dt-table th.dt-sorter::before{border-top:4px solid var(--color-SecondaryText);top:18px}
+
+.dt-table th.dt-sorter::after{border-bottom:4px solid var(--color-SecondaryText);border-top:4px solid transparent;bottom:22px}
+
+.dt-table th.dt-sorter.asc::after,.dt-table th.dt-sorter.desc::before{opacity:0.6}
+
+.hidden{display:none !important;opacity:0 !important}
