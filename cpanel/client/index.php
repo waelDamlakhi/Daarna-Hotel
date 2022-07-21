@@ -1,8 +1,8 @@
 <?php
   ob_start();
   require "../../global/DBOperations.php";
-  $PageName = $lang['ControlPanel'];
-  $Page = 'ControlPanel';
+  $PageName = $lang['MyReservations'];
+  $Page = 'MyReservations';
   require "../../global/header.php";
   if (isset($_SESSION['Client']))
   {
@@ -12,7 +12,7 @@
       <div class="container">
         <ol class="breadcrumb my-3">
           <li class="breadcrumb-item"><a class="breadcrumb-link fw-bold text-decoration-none text-uppercase" href="../../index.php"><?php echo $lang['Home']; ?></a></li>
-          <li class="breadcrumb-item breadcrumb-link fw-bold text-decoration-none text-uppercase active" aria-current="page"><?php echo $lang['ControlPanel']; ?></li>
+          <li class="breadcrumb-item breadcrumb-link fw-bold text-decoration-none text-uppercase active" aria-current="page"><?php echo $lang['MyReservations']; ?></li>
         </ol>
       </div>
     </nav>

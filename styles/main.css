@@ -17,13 +17,12 @@
 }
 
 body {
-  font-family: 'Roboto', 'sans-serif';
+  /* font-family: 'Roboto', 'sans-serif';
   font-family: 'Almarai', 'sans-serif';
   font-family: 'Tajawal', 'sans-serif';
-  font-family: 'Cairo', 'sans-serif';
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; */
   background-color: var(--color-BackgroundBody);
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 /* Start Scrollbar */
@@ -38,11 +37,73 @@ body {
 
 #MyMark {z-index: 9999; font-size: xx-small; display: none;}
 
-#scroll-top
+/* Start Section Loading */
+
+/* .loading-overlay
 {
+  background:#222;
+  color:#FFF;
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  z-index:99999
+}
+
+.spinner
+{
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin: 300px auto;
+}
+
+.double-bounce1, .double-bounce2
+{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #FFF;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: bounce 2.0s infinite ease-in-out;
+  animation: bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2
+{
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes bounce 
+{
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bounce 
+{
+  0%, 100% 
+  { 
+  transform: scale(0.0);
+  -webkit-transform: scale(0.0);
+  } 
+  50%
+  { 
+  transform: scale(1.0);
+  -webkit-transform: scale(1.0);
+  }
+} */
+
+/* End Section Loading */
+
+#scroll-top{
   color: var(--color-PrimaryText);
   position: fixed;
-  right: 15px;
   bottom: 10px;
   z-index: 9999;
   display: none;
@@ -67,7 +128,7 @@ body {
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link:hover { color: var(--color-SecondaryText) !important; }
 
-.dropdown-item:hover, .dropdown-item:focus { background-color: rgba(255, 255, 255, 0.15); padding-left:25px }
+.dropdown-item:hover, .dropdown-item:focus { background-color: rgba(255, 255, 255, 0.15); }
 
 .dropdown-hover:hover>.dropdown-menu { display: inline-block; }
 
@@ -88,12 +149,14 @@ body {
 ****** Group SeconderText ******
 ********************************
 */
+.table-customize-clients,
+.Error, .toast,
 .MyProfile #CustomAccountImage,
 .SectionEvaluation,
 .section-flat-evaluation,
 .section-flat-feature,
 .section-booking-now,
-.section-booking-now .Phone,
+.section-booking-now .CheckOut,
 .section-single-flat,
 .SectionFlatsShow,.SectionAbout,
 .SectionFlatsShow .accordion-button,
@@ -150,8 +213,6 @@ body {
 }
 
 .offcanvas .offcanvas-footer { width: 100%;}
-
-.ImgLogIn { margin-left: 0 !important;}
 
 @media (max-width: 575.98px) { .navbar .side { position: fixed; top: 35px; } }
 
@@ -274,8 +335,6 @@ input[type = 'color']::-moz-color-swatch { border-radius: 5px; box-shadow: 0 0 2
 
 .FormSiteStyle .dzRemoveImg {
   opacity: 0;
-  /*min-width: 90%;
-  max-width: 90%;*/
   -webkit-transition: opacity .2s linear;
   -moz-transition: opacity .2s linear;
   -ms-transition: opacity .2s linear;
@@ -286,12 +345,6 @@ input[type = 'color']::-moz-color-swatch { border-radius: 5px; box-shadow: 0 0 2
 .FormSiteStyle .dzImgPreview:hover .dzImage { opacity: 0.3; }
 
 .FormSiteStyle .dzImgPreview:hover .dzRemoveImg { opacity: 1; }
-
-/* @media (max-width: 575.98px) { .FormSiteStyle .dzRemoveImg { padding: 50px 0px 50px 20px !important; margin: 10px 0px !important;} }
-
-@media (min-width: 576px) { .FormSiteStyle .dzRemoveImg { padding: 30px 0 !important; margin: 10px 0 !important;} }
-
-@media (min-width: 991px) { .FormSiteStyle .dzRemoveImg { padding: 40px 0 !important;} } */
 
 .FormSiteStyle .slick-arrow::before { color: var(--color-SecondaryText);}
 
@@ -474,6 +527,31 @@ input[type='file']::-webkit-file-upload-button { display: none; }
   margin: 15px auto;
 }
 
+.Offers { top: -10px; width: 100px; height: 100px;}
+
+.Offers::before {
+  position: absolute;
+  width: 150px;
+  height: 35px;
+  background-color: #931b21;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-SecondaryText);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+}
+
+.Offers::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #931b21;
+  z-index: -1;
+  box-shadow: 140px -140px #931b21;
+}
+
 .SectionFlatsShow .Pagination { border: 1px solid var(--color-PrimaryText); color: var(--color-SecondaryText);}
 
 .SectionFlatsShow .Pagination:hover{ color: var(--color-PrimaryText);}
@@ -513,6 +591,7 @@ input[type='file']::-webkit-file-upload-button { display: none; }
   ****** Group BackgroundElement *********
   ****************************************
 */
+.toast,
 .MyProfile #CustomAccountImage,
 .navbar .dropdown-menu,
 .section-single-flat .bgDark,
@@ -527,6 +606,8 @@ input[type='file']::-webkit-file-upload-button { display: none; }
 .card, .accordionAddFeaturesFlat .accordion-item, .accordionAddFeaturesFlat .accordion-button{
   background-color: var(--color-BackgroundElement);
 }
+
+.Error { background-color: transparent;}
 
 /*
 *******************************************
@@ -555,14 +636,12 @@ input[type='file']::-webkit-file-upload-button { display: none; }
 
 .dt-input{ padding:6px 12px; }
 
-.dt-pagination ul{margin:0;padding-left:0}
+.dt-pagination ul{ margin:0; }
 
-.dt-pagination ul li{list-style:none;float:left}
+.dt-pagination ul li{ list-style:none; float:left }
 
 .dt-pagination a,.dt-pagination span{
   border:1px solid transparent;
-  float:left;
-  margin-left:2px;
   padding:6px 12px;
   position:relative;
   text-decoration:none;
@@ -592,14 +671,12 @@ input[type='file']::-webkit-file-upload-button { display: none; }
 
 .dt-table>thead>tr>th,.dt-table>thead>tr>td{
   vertical-align:bottom;
-  text-align:left;
   border-bottom:1px solid var(--color-SecondaryText)
 }
 
 .dt-table th.dt-sorter{
   position:relative;
   cursor:pointer;
-  /* padding-right:20px */
 }
 
 .dt-table th.dt-sorter::before,.dt-table th.dt-sorter::after{
@@ -607,9 +684,6 @@ input[type='file']::-webkit-file-upload-button { display: none; }
   height:0;
   width:0;
   position:absolute;
-  right:7px;
-  border-left:4px solid transparent;
-  border-right:4px solid transparent;
   opacity:0.2
 }
 

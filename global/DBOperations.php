@@ -1,6 +1,8 @@
 <?php
 	session_start();
 	require 'lang.php';
+  $isClient = false; 
+  $Discount = 0;
   if (isset($_COOKIE['lang'])) 
   {
     $lang = $ar;
@@ -22,6 +24,11 @@
 	catch(PDOException $e) {
 		echo $e->getMessage();
 	}
+
+  /**
+    * 
+  */
+  CheckSale();
 
   /**
     *********************************
@@ -73,7 +80,7 @@
             <div>
               <?php echo $lang['Sorry:ThereIsAnErrorInTheUserNameOrPassword']; ?>
             </div>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           <?php
         }
@@ -245,7 +252,10 @@
     $FlatDisplay->execute();
     if ($FlatDisplay->rowCount() > 0)
     {
-      echo json_encode($FlatDisplay->fetchAll());
+      CheckSale();
+      $response['Flats'] = $FlatDisplay->fetchAll();
+      $response['isClient'] = $isClient;
+      echo json_encode($response);
     }
     else 
     {
@@ -281,16 +291,33 @@
 
 	/**
     **********************************
+	  ********* Check Flat Id **********
+    **********************************
+  */
+  if (isset($_POST['CheckFlatId']))
+  {
+    if (isset($_POST['FlatId']) && isset($_POST['FloorId'])) 
+    {
+      $GetFlatNumber = $con->prepare("SELECT * FROM flats WHERE FlatId = ? AND FloorId = ?");
+      $GetFlatNumber->execute(array($_POST['FlatId'], $_POST['FloorId']));
+      echo $GetFlatNumber->rowCount() > 0 ? true : false;
+    }
+    else
+    {
+      echo http_response_code(501);
+    }
+  }
+
+	/**
+    **********************************
 	  ********** Add New Flat **********
     **********************************
   */
-	if (isset($_POST['AddFlat']))
+	if (isset($_POST['AddNewFlat']))
 	{
 		if (isset($_POST['FlatId']) && isset($_POST['FloorId']) && isset($_POST['Area']) && isset($_POST['View']) && isset($_FILES['MainImage']) && isset($_FILES['OtherImage']) && isset($_POST['Data'])) 
 		{
-      $GetFlatNumber = $con->prepare("SELECT * FROM flats WHERE FlatId = ? AND FloorId = ?");
-      $GetFlatNumber->execute(array($_POST['FlatId'], $_POST['FloorId']));
-      if ($GetFlatNumber->rowCount() == 0)
+      try 
       {
         /*
           * Upload Main Image
@@ -313,11 +340,10 @@
           $AddFlatFeatures = $con->prepare("INSERT INTO flat_features SET FeatureId = ?, FloorId = ?, FlatId = ?, Quantity = ?");
           $AddFlatFeatures->execute(array($key['FeatureId'], $_POST['FloorId'], $_POST['FlatId'], $key['Quantity']));
         }
-        echo true;
-      }
-      else
+      } 
+      catch (Exception $e) 
       {
-        echo false;
+        echo $e->getMessage();
       }
 		}
 		else 
@@ -349,6 +375,25 @@
       }
 			$DeleteFlat = $con->prepare('DELETE FROM flats WHERE FloorId = ? AND FlatId = ?');
 			$DeleteFlat->execute(array($_POST['FloorId'], $_POST['FlatId']));
+		}
+		else 
+		{
+			echo http_response_code(501);
+		}
+  }
+
+  /**
+    *************************************
+    * Check Username Of Client Is Exist *
+    *************************************
+  */
+  if (isset($_POST['CheckUserName'])) 
+  {
+    if(isset($_POST['UserName']))
+		{
+      $GetUserName = $con->prepare("SELECT * FROM clients WHERE UserName = ?");
+      $GetUserName->execute(array($_POST['UserName']));
+      echo $GetUserName->rowCount() > 0 ? true : false;
 		}
 		else 
 		{
@@ -493,6 +538,58 @@
     ***** Handle Requset Setting ***
     ********************************
   */
+  /**
+    *********************************
+    ******* Change My Profile *******
+    *********************************
+  */
+  if (isset($_POST['EditProfile'])) 
+  {
+    if (isset($_SESSION['Client'])) 
+    {
+      if (isset($_POST['oldImage']) & isset($_FILES['AccountImage']) & isset($_POST['Password']) & isset($_POST['Phone']) & isset($_POST['Email'])) 
+      {
+        $SET = array();
+        $DATA = array();
+        if (!empty($_FILES['AccountImage']['name'])) 
+        {
+          $image = rand(0, 9999999) . '_' . $_FILES['AccountImage']['name'];
+          move_uploaded_file($_FILES['AccountImage']['tmp_name'], "../photos/" . $image);
+          if (!empty($_POST['oldImage'])) 
+          {
+            unlink("../photos/" . $_POST['oldImage']);
+          }
+          $SET[] = 'AccountImage = ?';
+          $DATA[] = $image;
+        }
+        if (!empty($_POST['Password']))
+        {
+          $SET[] = 'Pass = ?';
+          $DATA[] = SHA1($_POST['Password']);
+        }
+        $SET[] = 'Phone = ?';
+        $DATA[] = $_POST['Phone'];
+        $SET[] = 'Email = ?';
+        $DATA[] = $_POST['Email'];
+        $DATA[] = $_SESSION['ClientId'];
+        $UpdateClient = $con->prepare("UPDATE clients SET " . implode(", ", $SET) . "WHERE ClientId = ?");
+        $UpdateClient->execute($DATA);
+      }
+      else
+      {
+        echo http_response_code(501);
+      }
+    }
+    else 
+    {
+      if (isset($_POST['Password']) && !empty($_POST['Password']))
+      {
+        $UpdateUser = $con->prepare("UPDATE employees SET Pss = ? WHERE EmpId = ?");
+        $UpdateUser->execute(array(SHA1($_POST['Password'])), $_SESSION[array_keys($_SESSION)[0]]);
+      }
+    }
+  }
+
   /**
     *********************************
     ****** Change Site Sittings *****
@@ -1089,4 +1186,23 @@
 		$stmt2 = $con->prepare("SELECT COUNT($item) FROM $table $where");
 		$stmt2->execute();
 		return $stmt2->fetchColumn();
+	}
+
+	function CheckSale()
+	{
+		global $con, $isClient, $Discount;
+    if (isset($_SESSION['Client']))
+    {
+      $GetClientDiscount = $con->prepare("SELECT Value FROM discounts WHERE ClientId = ? AND Start <= CURDATE() AND End >= CURDATE()");
+      $GetClientDiscount->execute(array($_SESSION['ClientId']));
+      if ($GetClientDiscount->rowCount() > 0)
+      {
+        $Discount = $GetClientDiscount->fetchColumn();
+        $isClient = true;
+      }
+    }
+    else
+    {
+      $isClient = false;
+    }
 	}

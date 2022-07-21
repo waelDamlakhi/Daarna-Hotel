@@ -69,6 +69,7 @@
     'ArabicAboutHotel' => 'Arabic About Hotel',
     'DropFilesHereOrClickToUpload' => 'Drop Files Here Or Click To Upload',
     'RemoveFile' => 'Remove File',
+    'Successfully' => 'Successfully',
 
     // Admin Floors Page
     'Floor' => 'Floor',
@@ -95,10 +96,10 @@
     'East' => 'East',
     'South' => 'South',
     'West' => 'West',
-    'NorthEast' => 'North East',
-    'EastSouth' => 'East South',
-    'SouthWest' => 'South West',
-    'WestNorth' => 'West North',
+    'NorthEast' => 'NorthEast',
+    'EastSouth' => 'EastSouth',
+    'SouthWest' => 'SouthWest',
+    'WestNorth' => 'WestNorth',
     'MainImage' => 'Main Image',
     'OtherImage' => 'Other Image',
     'Close' => 'Close',
@@ -111,6 +112,7 @@
     'Bathrooms' => 'Bathrooms',
     'Beds' => 'Beds',
     'Warning:NoPrimaryFeaturesHaveBeenSelectedYet.' => 'Warning: No Primary Features Have Been Selected Yet.',
+    'ValueMustBeGreaterThanOrEqualToOne' => 'Value Must Be Greater Than Or Equal To One',
 
     // Features Admin Page
     'NewFeature' => 'New Feature',
@@ -175,6 +177,8 @@
     'All' => 'All',
     'Rate' => 'Rate',
     'Search' => 'Search',
+    'FlatsHotel' => 'Flats Hotel',
+    'Sale' => 'Sale',
 
     // Single Flat Page
     'BookingNow' => 'Booking Now',
@@ -182,8 +186,8 @@
     'IDImage' => 'ID Image',
     'ChangeAccountImage' => 'Change Account Image',
     'FlatRates' => 'Flat Rates',
-    'EntryDate' => 'Entry Date',
-    'ExitDate' => 'Exit Date',
+    'EntryDate' => 'Check In',
+    'ExitDate' => 'Check Out',
     'ReadMore' => 'Read More',
     'ReadLess' => 'Read Less',
     'Cancel' => 'Cancel',
@@ -193,6 +197,17 @@
     'BookingDone' => 'Booking Done',
     'BookingWait' => 'Booking Wait',
     'ThisFlatIdIsAlreadyExistOnThisFloor' => 'This Flat Id Is Already Exist On This Floor',
+    'ThisDateIsOverlappingWithAnotherDate' => 'This Date Is Overlapping With Another Date',
+    'YouAlreadyHaveAnAccountPleaseLoginAndTryBookingAgain' => 'You Already Have An Account Please Login And Try Booking Again',
+    'CheckOutDateIsTheDayTheRoomReservationWillBeCanceled' => 'Check Out Date Is The Day The Room Reservation Will Be Canceled',
+    'PleaseWaitForThePreviousReservationToBeInstalled' => 'Please Wait For The Previous Reservation To Be Installed',
+    'NoRatingYet' => 'No Rating Yet',
+    'FinalPrice' => 'Final Price',
+    'ThereAreNoServicesYet' => 'There Are No Services Yet',
+    'ThisUserNameIsExist' => 'This UserName Is Exist',
+
+    // Client
+    'MyReservations' => 'My Reservations',
 
     // Footer
     'HotelName' => 'Daarna Hotel',
@@ -280,6 +295,7 @@
     'ArabicAboutHotel' => 'حول الفندق عربي',
     'DropFilesHereOrClickToUpload' => 'قم بإسقاط الملفات هنا أو انقر للتحميل',
     'RemoveFile' => 'حذف الملف',
+    'Successfully' => 'نجحت',
 
     // Admin Floors Page
     'Floor' => 'طابق',
@@ -319,6 +335,7 @@
     'Warning:NoHotelFeaturesHaveBeenIntroducedYet' => 'تحذير: لم يتم إدخال الميزات الأساسية للفندق',
     'FlatFeatures' => 'ميزات الشقة:',
     'Warning:NoPrimaryFeaturesHaveBeenSelectedYet.' => '.تحذير: لم يتم إختيار ميزات الغرفة الأساسية بعد',
+    'ValueMustBeGreaterThanOrEqualToOne' => 'يجب أن تكون القيمة أكبر أو يساوي الواحد',
 
     // Features Admin Page
     'NewFeature' => 'ميزة جديدة',
@@ -327,6 +344,7 @@
     'FeatureId' => 'رقم الميزة',
     'FeatureName' => 'اسم الميزة',
     'Details' => 'التفاصيل',
+    'Price' => 'السعر',
     'LowPrice' => 'أدنى سعر',
     'HeighPrice' => 'أعلى سعر',
     'All' => 'الكل',
@@ -378,9 +396,11 @@
     // Home Page
     'Hotel' => 'الفندق',
     'HomePage' => 'الصفحة الرئيسية',
-    'NotRated' => 'لم يتم تقييمه ',
+    'NotRated' => 'لم يتم تقييم',
     'Rate' => 'التقييم',
     'Search' => 'البحث',
+    'FlatsHotel' => 'شقق الفندق',
+    'Sale' => 'خصم',
 
     // Single Flat Page
     'BookingNow' => 'احجز الآن',
@@ -394,12 +414,22 @@
     'ReadLess' => 'عرض أقل',
     'Cancel' => 'إلغاء الأمر',
     'FlatInformation' => 'معلومات الشقة',
-    'FlatInfo' => ':خصائص الشقة',
-    'FlatImages' => ':صور الشقة',
+    'FlatInfo' => 'خصائص الشقة:',
+    'FlatImages' => 'صور الشقة:',
     'BookingDone' => 'تم الحجز',
     'BookingWait' => 'إنتطار الحجز',
     'ThisFlatIdIsAlreadyExistOnThisFloor' => 'رقم الشقة موجود في هذا الطابق',
+    'ThisDateIsOverlappingWithAnotherDate' => 'هذا التاريخ متداخل مع تاريخ آخر',
+    'YouAlreadyHaveAnAccountPleaseLoginAndTryBookingAgain' => 'لديك حساب بالفعل الرجاء تسجيل الدخول وحاول الحجز مرة أخرى',
+    'CheckOutDateIsTheDayTheRoomReservationWillBeCanceled' => 'تاريخ تسجيل المغادرة هو اليوم الذي سيتم فيه إلغاء حجز الغرفة',
+    'PleaseWaitForThePreviousReservationToBeInstalled' => 'يرجى الانتظار حتى يتم تثبيت الحجز السابق',
+    'NoRatingYet' => 'لا يوجد تقييم بعد',
+    'FinalPrice' => 'السعر النهائي',
+    'ThereAreNoServicesYet' => 'لا توجد خدمات بعد',
+    'ThisUserNameIsExist' => 'اسم المستخدم موجود',
 
+    // Client
+    'MyReservations' => 'حجوزاتي',
 
     // Footer
     'HotelName' => 'دارنا أوتيل',

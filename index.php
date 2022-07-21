@@ -12,9 +12,9 @@
   </section>
   <!-- End Carousel -->
   <!-- Start Flats Show Section -->
-  <section class="SectionFlatsShow text-center" id="SectionFlatsShow">
+  <section class="SectionFlatsShow HeightBody text-center my-3" id="SectionFlatsShow">
     <div class="container">
-      <h1 class="mb-3"><?php echo $lang['Hotel'] . ' ' . $lang['Flats']; ?></h1>
+      <h1 class="mb-3"><?php echo $lang['FlatsHotel']; ?></h1>
       <!-- Start Accordion -->
       <div class="accordion accordion-flush text-start mb-3" id="accordionSearchHomePage">
         <div class="accordion-item">
@@ -90,19 +90,66 @@
   </section>
   <!-- End Flats Show Section -->
   <!-- Start Section Evaluation -->
-  <section class="SectionEvaluation text-center mt-3" id="SectionEvaluation">
+  <section class="SectionEvaluation HeightBody text-center my-3" id="SectionEvaluation">
     <div class="container">
       <h1 class="mb-3"><?php echo $lang['Evaluation'] ?></h1>
-      <div>
-        <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta totam voluptatibus quas placeat laborum qui, cupiditate blanditiis earum hic, sed doloribus pariatur nam facilis, voluptates sint. Deleniti ipsam commodi placeat
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore dicta quo, a magnam eius laboriosam itaque voluptatem molestias sequi impedit tempore. Eius aliquid optio nihil rerum quo id harum mollitia!
-        </p>
-      </div>
+      <?php
+        if (true)
+        {
+          ?>
+          <div id="serviceEval" style="height: 450px !important;">
+            <div class="overflow-auto" style="height: 450px !important;">
+              <div class="row mw-100">
+                <div class="col-6 col-lg-4 mb-2 d-flex justify-content-center">
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-header"><?php echo $lang['ServiceName'] ?></div>
+                    <div class="card-body">
+                      <div class="card-title h4">
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      </div>
+                      <h6 class="card-subtitle">لا يوجد تقييم</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-lg-4 mb-2 d-flex justify-content-center">
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-header"><?php echo $lang['ServiceName'] ?></div>
+                    <div class="card-body">
+                      <h4 class="card-title">
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      <i class="far fa-star fa-fw"></i>
+                      </h4>
+                      <h6 class="card-subtitle">لا يوجد تقييم</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php
+        }
+        else
+        {
+          ?>
+          <img class="mx-auto img-fluid" src="/DAARNA-HOTEL/photos/reviews.png">
+          <div class="fs-4">
+            <?php echo $lang['ThereAreNoServicesYet']; ?>
+          </div>
+          <?php
+        }
+      ?>
     </div>
   </section>
   <!-- End Section Evaluation -->
   <!-- Start Section About -->
-  <section class="SectionAbout text-center" id="SectionAbout">
+  <section class="SectionAbout text-center HeightBody my-3" id="SectionAbout">
     <div class="container">
       <h1 class="mb-3"><?php echo $lang['AboutUs'] ?></h1>
       <div>

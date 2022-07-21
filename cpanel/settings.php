@@ -31,24 +31,28 @@
                 <div class="row mb-3">
                   <label for="User-Name" class="col-md-3 col-form-label"><i class="fa fa-user-circle fa-fw me-1"></i><?php echo $lang['UserName']; ?></label>
                   <div class="col-md-9">
-                    <input type="name" name="User-Name" class="form-control" id="User-Name" placeholder="UserName" value="admin">
+                    <input type="name" name="User-Name" class="form-control" id="User-Name" placeholder="UserName" value="<?php echo $_SESSION[array_keys($_SESSION)[1]] ?>" disabled>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="Pass" class="col-md-3 col-form-label"><i class="fas fa-user-lock fa-fw me-1"></i><?php echo $lang['Password']; ?></label>
                   <div class="col-md-9">
-                    <input type="password" class="form-control" name="Password" id="Pass" placeholder="Password">
+                    <input type="password" class="form-control" name="Password" id="Pass" minlength="8" placeholder="Password" autocomplete="off">
                   </div>
                 </div>
                 <?php
               }
               else
               {
+                $GetClient = $con->prepare("SELECT * FROM clients WHERE ClientId = ?");
+                $GetClient->execute(array($_SESSION['ClientId']));
+                $Client = $GetClient->fetch();
                 ?>
                 <div class="row">
                   <div class="col-md-4">
                     <div class="DisplayAccountImage d-flex justify-content-center">
-                      <img class="ImageAccount img-fluid" src="../photos/logo.WebP" alt="AccountImage">
+                      <input type="hidden" value="<?php echo !empty($Client['AccountImage']) ? $Client['AccountImage'] : '' ?>" name="oldImage"/>
+                      <img class="ImageAccount img-fluid" src="../photos/<?php echo !empty($Client['AccountImage']) ? $Client['AccountImage'] : 'avatar01.png' ?>" alt="AccountImage">
                     </div>
                     <div class="input-group justify-content-center my-2">
                       <input type="file" class="form-control shadow-none" name="AccountImage" accept="image/*" id="AccountImage" hidden>
@@ -57,22 +61,19 @@
                   </div>
                   <div class="col-md-8">
                     <div class="form-floating mb-2">
-                      <input type="name" name="User-Name" class="form-control" id="User-Name" placeholder="UserName" value="admin">
+                      <input type="name" name="User-Name" class="form-control" id="User-Name" placeholder="UserName" value="<?php echo $Client['UserName'] ?>" autocomplete="off" disabled>
                       <label for="User-Name"><i class="fa fa-user-circle me-1"></i><?php echo $lang['UserName']; ?></label>
                     </div>
                     <div class="form-floating mb-2">
-                      <input type="password" class="form-control" name="Password" id="Pass" placeholder="Password">
+                      <input type="password" class="form-control" name="Password" id="Pass"  minlength="8" placeholder="Password" autocomplete="off">
                       <label for="Pass"><i class="fas fa-user-lock me-1"></i><?php echo $lang['Password']; ?></label>
                     </div>
                     <div class="form-floating mb-2">
-                      <input type="tel" class="form-control" name="Phone" id="Phone" pattern="[0][9][0-9]{8}" value="0990416940" required>
-                      <a tabindex="0" role="button" class="position-absolute Phone top-0 end-0 mt-3 mx-5" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Enter a valid phone number that works on the Syrian network">
-                        <i class="fas fa-info-circle"></i>
-                      </a>
+                      <input type="tel" class="form-control" name="Phone" id="Phone" pattern="[0][9][0-9]{8}" value="<?php echo $Client['Phone'] ?>" autocomplete="off">
                       <label for="Phone"><i class="fas fa-mobile-alt me-1"></i><?php echo $lang['Phone']; ?></label>
                     </div>
                     <div class="form-floating mb-2">
-                      <input type="email" class="form-control" name="Email" id="Email" placeholder="Email" value="a@asd.com" required>
+                      <input type="email" class="form-control" name="Email" id="Email" placeholder="Email" value="<?php echo $Client['Email'] ?>" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,4}$" autocomplete="off">
                       <label for="Email"><i class="fas fa-at me-1"></i><?php echo $lang['Email']; ?></label>
                     </div>
                   </div>
@@ -80,7 +81,7 @@
                 <?php
               }
             ?>
-            <button type="submit" class="btn btn-outline-success mt-3 hvr-skew-backward"><i class="fas fa-check-double align-middle"></i> <?php echo $lang['Save']; ?></button>
+            <button type="submit" class="btn btn-outline-success mt-3 hvr-hang"><i class="fas fa-check-double align-middle"></i> <?php echo $lang['Save']; ?></button>
           </form>
         </div>
       </section>
@@ -265,9 +266,20 @@
                 </div>
               </div>
               <div class="modal-footer pt-2 pb-0">
-                <button type="submit" class="btn btn-outline-success shadow-none"><i class="fas fa-check-double align-middle"></i> <?php echo $lang['Save']; ?></button>
+                <button type="submit" class="btn btn-outline-success shadow-none hvr-hang"><i class="fas fa-check-double align-middle"></i> <?php echo $lang['Save']; ?></button>
               </div>
             </form>
+            <!-- Start Toast -->
+            <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
+              <div id="SuccessfullySettings" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+                <div class="toast-header">
+                  <i class="fa-solid fa-circle-check fa-fw fs-5 text-success"></i>
+                  <strong class="me-auto"><?php echo $lang['Successfully']; ?></strong>
+                  <button type="button" class="btn-close shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+            <!-- End Toast -->
           </div>
         </section>
         <!-- End Form SiteSettings -->
@@ -277,6 +289,10 @@
       {
         header('location: /Daarna-Hotel/not-found.php');
       }
+    }
+    else
+    {
+      header('location: /Daarna-Hotel/not-found.php');
     }
   }
   else

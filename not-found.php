@@ -17,7 +17,7 @@
   <!-- Start Section Error -->
   <section class="NotFound text-center my-5">
     <div class="container">
-      <h1 class="display-1 m-0 fw-bold">
+      <h1 class="display-1 m-0 fw-bold wow shakeX" data-wow-duration="4s" data-wow-delay="6s">
         <?php echo $lang['Error'];?>
         <span style="letter-spacing: -8px;" class="ms-2">
           4
@@ -26,7 +26,7 @@
         </span>
       </h1>
       <p class="lead mx-auto" style="width: 60%;"><?php echo $lang['ThePageYouWereLookingForDoesNotExist,TheAddressMayBeMisspelled,OrThePageMayHaveBeenMovedOrDeleted.'] ?></p>
-      <button class="btn btn-dark" onclick="history.back();"><?php echo $lang['GoBack'] ?></button>
+      <button class="btn btn-dark hvr-buzz" onclick="history.back();"><?php echo $lang['GoBack'] ?></button>
     </div>
   </section>
   <!-- End Section Error -->

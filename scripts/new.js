@@ -22,13 +22,17 @@ $(function ()
     FeatureType = {'Room': 0, 'Bath': 0, 'Bed': 0},
     FlatsData = new Array(),
     StepDataShow = 2,
-    OldHotelImages = ['2019144267_8.jpg', '902584348_9.jpg'],
+    OldHotelImages = ['962256551_1.jpg', '369201637_6.jpg', '872590010_2.jpg', '924718708_4.jpg', '1084549140_9.jpg', '601318005_7.jpg', '1293647840_10.jpg'],
     NewHotelImages = new Array(),
     RemovedHotelImages = new Array(),
     ImageName = '',
     calendar = null,
     events = new Array(),
-    FlatId = $('#getflatid').data('flatid');
+    FlatId = $('#getflatid').data('flatid'),
+    FinalPrice = 0,
+    DayPrice = 0,
+    isClient = false,
+    BodyHeight = window.innerHeight - $('.navbar').height();
 
 /**************************************************************************/
 
@@ -37,6 +41,24 @@ $(function ()
     ******* Exec On Load Page ********
     **********************************
   */
+
+  /**
+    * Loading Screen
+  */
+
+$(window).ready(function ()
+{
+  // Loading Elements
+  $(".loading-overlay .spinner").fadeOut(1000, function ()
+  {
+    // Show The Scroll
+    $("body").css("overflow", "auto");
+    $(this).parent().fadeOut(1000, function ()
+    {
+      $(this).remove();
+    });
+  });
+});
 
   /*
     * Cal Function To Display Data
@@ -137,8 +159,11 @@ $(function ()
   /**
     * Moving Image For Full Window
   */
-  $('.ImageCarousel').height(window.innerHeight - $('.navbar').height());
-
+  $('.ImageSlick').height(BodyHeight);
+  if (window.matchMedia('(min-width: 991px)').matches)
+  {
+    $('.HeightBody').height(BodyHeight);
+  }
 /*****************************************************************************/
 
   /*
@@ -197,10 +222,10 @@ $(function ()
           $(".ButtonRemoveFloor").prop("disabled", false);
           $.each(msg, function (indexInArray) 
           { 
-            data += `<tr><td>${msg[indexInArray].FloorId}
-            </td><td>${msg[indexInArray].FlatCount}
-            </td><td>${msg[indexInArray].UserName}
-            </td><td><a href="?Page=Flats&Id=${msg[indexInArray].FloorId}" class="LinkShowFlats text-info" aria-label="${Word.Show}" data-balloon-pos="up"><i class="far fa-eye fs-5"></i></a></td></tr>`
+            data += `<tr><td>${msg[indexInArray].FloorId}</td>
+            <td>${msg[indexInArray].FlatCount}</td>
+            <td>${msg[indexInArray].UserName}</td>
+            <td><a href="?Page=Flats&Id=${msg[indexInArray].FloorId}" class="LinkShowFlats text-info" aria-label="${Word.Show}" data-balloon-pos="up"><i class="far fa-eye fs-5"></i></a></td></tr>`
           });
         }
         else
@@ -241,12 +266,12 @@ $(function ()
         {
           $.each(msg, function (indexInArray) 
           { 
-            data += `<tr><td>${msg[indexInArray].FlatId}
-            </td><td>${msg[indexInArray].RoomsCount}
-            </td><td>${Word[msg[indexInArray].View]}
-            </td><td>${msg[indexInArray].Area}
-            </td><td>${msg[indexInArray].UserName}
-            </td><td><a class="DeleteAnyFlat text-danger me-3" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-trash"></i></a><a href="/Daarna-Hotel/single-flat.php?FlatId=${msg[indexInArray].FlatId}&FloorId=${FloorId}" class="LinkShowFlat text-info" aria-label="${Word.Show}" data-balloon-pos="up"><i class="far fa-eye fs-5"></i></a></td></tr>`
+            data += `<tr><td>${msg[indexInArray].FlatId}</td>
+            <td>${msg[indexInArray].RoomsCount}</td>
+            <td>${Word[msg[indexInArray].View]}</td>
+            <td>${msg[indexInArray].Area}</td>
+            <td>${msg[indexInArray].UserName}</td>
+            <td><a class="DeleteAnyFlat text-danger me-3" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-trash"></i></a><a href="/Daarna-Hotel/single-flat.php?FlatId=${msg[indexInArray].FlatId}&FloorId=${FloorId}" class="LinkShowFlat text-info" aria-label="${Word.Show}" data-balloon-pos="up"><i class="far fa-eye fs-5"></i></a></td></tr>`
           });
         }
         $('.table-customize-flat .container').append(`
@@ -284,13 +309,13 @@ $(function ()
         {
           $.each(msg, function (indexInArray) 
           { 
-              data += `<tr><td>${msg[indexInArray].Id}
-              </td><td>${(msg[indexInArray].FeatureId == 1 ? Word.Room : (msg[indexInArray].FeatureId == 2 ? Word.Bath : (msg[indexInArray].FeatureId == 3 ? Word.Bed : (msg[indexInArray].FeatureId == 4 ? Word.TV : (msg[indexInArray].FeatureId == 5 ? Word.AC : (msg[indexInArray].FeatureId == 6 ? Word.Stove : (msg[indexInArray].FeatureId == 7 ? Word.Oven : (msg[indexInArray].FeatureId == 8 ? Word.Fridge : (msg[indexInArray].FeatureId == 9 ? Word.Laundry : Word.Cooler)))))))))}
-              </td><td>${msg[indexInArray].Details}
-              </td><td>${msg[indexInArray].Price}
-              </td><td>${msg[indexInArray].UserName}
-              </td><td><a class="DeleteAnyFeature text-danger me-4" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fas fa-trash-alt fs-6"></i></a>
-              <a class="EditAnyFeature text-success" role="botton" data-bs-toggle="modal" data-bs-target="#comfirmAddAndEditFeature" aria-label="${Word.Edit}" data-balloon-nofocus data-balloon-pos="down"><i class="fas fa-edit fs-6"></i></a></td></tr>`
+              data += `<tr><td>${msg[indexInArray].Id}</td>
+              <td>${(msg[indexInArray].FeatureId == 1 ? Word.Room : (msg[indexInArray].FeatureId == 2 ? Word.Bath : (msg[indexInArray].FeatureId == 3 ? Word.Bed : (msg[indexInArray].FeatureId == 4 ? Word.TV : (msg[indexInArray].FeatureId == 5 ? Word.AC : (msg[indexInArray].FeatureId == 6 ? Word.Stove : (msg[indexInArray].FeatureId == 7 ? Word.Oven : (msg[indexInArray].FeatureId == 8 ? Word.Fridge : (msg[indexInArray].FeatureId == 9 ? Word.Laundry : Word.Cooler)))))))))}</td>
+              <td>${msg[indexInArray].Details}</td>
+              <td>${msg[indexInArray].Price}</td>
+              <td>${msg[indexInArray].UserName}</td>
+              <td><a class="DeleteAnyFeature text-danger me-4" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fas fa-trash-alt fs-6"></i></a>
+              <a class="EditAnyFeature text-success" role="botton" data-bs-toggle="modal" data-bs-target="#comfirmAddAndEditFeature" aria-label="${Word.Edit}" data-balloon-nofocus data-balloon-pos="up"><i class="fas fa-edit fs-6"></i></a></td></tr>`
             });
         }
         $('.table-customize-feature .container').append(`
@@ -328,14 +353,14 @@ $(function ()
         {
           $.each(msg, function (indexInArray) 
           { 
-            data += `<tr><td>${msg[indexInArray].EmpId}
-            </td><td>${msg[indexInArray].UserName}
-            </td><td>${msg[indexInArray].AddedBy}
-            </td><td>
+            data += `<tr><td>${msg[indexInArray].EmpId}</td>
+            <td>${msg[indexInArray].UserName}</td>
+            <td>${msg[indexInArray].AddedBy}</td>
+            <td>
             <a class="${msg[indexInArray].Block == 'false' ? 'text-danger BlockAnyEmployee' : 'text-primary UnBlockAnyEmployee' } me-4" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheBlockEmployees" aria-label="${msg[indexInArray].Block == 'false' ? Word.Block : Word.UnBlock}" data-balloon-nofocus data-balloon-pos="up">
               <i class="fa-solid ${msg[indexInArray].Block == 'false' ? 'fa-user-lock' : 'fa-lock-open'}"></i>
             </a>
-            <a class="EditAnyEmployee text-success" role="botton" data-bs-toggle="modal" data-bs-target="#comfirmAddAndEditEmployees" aria-label="${Word.Edit}" data-balloon-nofocus data-balloon-pos="down">
+            <a class="EditAnyEmployee text-success" role="botton" data-bs-toggle="modal" data-bs-target="#comfirmAddAndEditEmployees" aria-label="${Word.Edit}" data-balloon-nofocus data-balloon-pos="up">
               <i class="fas fa-edit fs-6"></i>
             </a></td></tr>`
           });
@@ -394,10 +419,10 @@ $(function ()
         {
           $.each(msg, function (indexInArray) 
           { 
-            data += `<tr><td>${msg[indexInArray].ServiceId}
-            </td><td>${msg[indexInArray].ServiceName}
-            </td><td>${msg[indexInArray].UserName}
-            </td><td><a class="DeleteAnyServices text-danger" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-trash"></i></a></td></tr>`
+            data += `<tr><td>${msg[indexInArray].ServiceId}</td>
+            <td>${msg[indexInArray].ServiceName}</td>
+            <td>${msg[indexInArray].UserName}</td>
+            <td><a class="DeleteAnyServices text-danger" role="botton" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-trash"></i></a></td></tr>`
           });
         }
         $('.table-customize-services .container').append(`
@@ -443,13 +468,14 @@ $(function ()
         preview.append(`
           <div class="dzImgPreview px-2 position-relative" id="${OldHotelImages.indexOf(element)}">
             <img class="mw-100 dzImage rounded-2" src="/Daarna-Hotel/photos/${element}" />
-            <div class="dzRemoveImg position-absolute top-0 text-center">
+            <div class="dzRemoveImg position-absolute bottom-0">
               <button type="button" class="btn remove_image text-danger shadow-none" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-trash fs-4"></i></button>
             </div>
           </div>`
         );
       });
       preview.slick({
+        rtl: ($('#ar').hasClass('active') ? true : false),
         infinite: false,
         speed: 300,
         slidesToShow: 4,
@@ -482,9 +508,10 @@ $(function ()
       let HotelImages = $('#HotelImages');
       OldHotelImages.forEach(element => {
         
-        HotelImages.append(`<img src="photos/${element}" class="d-block ImageCarousel" style="object-fit:cover" alt="carousel1">`);
+        HotelImages.append(`<img src="photos/${element}" class="d-block ImageSlick" style="object-fit:cover" alt="carousel1">`);
       });
       HotelImages.slick({
+        rtl: ($('#ar').hasClass('active') ? true : false),
         infinite: true,
         arrows: false,
         slidesToShow: 1,
@@ -497,11 +524,12 @@ $(function ()
       var response = SendRequest("POST", data, "json");
       response.done(function (msg)
       {
-        if (msg.length > 0) 
+        if (msg.Flats.length > 0) 
         {
-          PageCount = Math.ceil(msg.length / StepDataShow),
-          FlatsData = msg;
-          GetFlats(1)
+          PageCount = Math.ceil(msg.Flats.length / StepDataShow),
+          FlatsData = msg.Flats;
+          isClient = msg.isClient;
+          GetFlats(1);
           for (let index = 1; index <= PageCount; index++) 
           {
             $('.SectionFlatsShow .container').append(`<button class="btn Pagination me-2 ${index == 1 ? `active` : ``} shadow-none rounded-circle">${index}</button>`);
@@ -517,6 +545,24 @@ $(function ()
           `);
         }
       });
+      // $('#serviceEval').slick({
+      //   infinite: false,
+      //   rtl: ($('#ar').hasClass('active') ? true : false),
+      //   responsive: [
+      //     {
+      //       breakpoint: 1000,
+      //       settings: {
+      //         arrows: false,
+      //       }
+      //     },
+      //     {
+      //       breakpoint: 600,
+      //       settings: {
+      //         arrows: false,
+      //       }
+      //     }
+      //   ]
+      // });
     }
     /**
       ********* Show All Images In Single Flat ************
@@ -524,7 +570,9 @@ $(function ()
     else if ($('body').attr('id') == 'flatPage')
     {
       FloorId = $('#getflatid').data('floorid');
+      DayPrice = parseFloat($('#DayPrice').text());
       $('#flatimages').slick({
+        rtl: ($('#ar').hasClass('active') ? true : false),
         slidesToShow: 2,
         slidesToScroll: 2,
         rows: 2,
@@ -591,16 +639,17 @@ $(function ()
         * Flat Evaluation Slick
       */
       $('.flat-evaluation').slick({
+        rtl: ($('#ar').hasClass('active') ? true : false),
         infinite: false,
         responsive: [
           {
-            breakpoint: 600,
+            breakpoint: 1000,
             settings: {
               arrows: false,
             }
           },
           {
-            breakpoint: 480,
+            breakpoint: 600,
             settings: {
               arrows: false,
             }
@@ -620,12 +669,12 @@ $(function ()
     {
       $('#FlatsCard').append(`
         <div class="col-12 col-md-6">
-          <div class="card mb-3" style="max-width: 540px;">
+          <div class="card mb-3 position-relative" style="max-width: 540px;">
             <div class="row g-0">
-              <div class="col-lg-8">
+              <div class="col-xl-8">
                 <img src="photos/${FlatsData[index]['MainImage']}" class="img-fluid rounded-start p-2" alt="Flats">
               </div>
-              <div class="col-lg-4">
+              <div class="col-xl-4">
                 <div class="card-body p-2 pt-lg-3">
                   <h5 class="card-title">FL ${FlatsData[index]['FloorId'].length > 1 ? FlatsData[index]['FloorId'] : '0' + FlatsData[index]['FloorId'] } - F ${FlatsData[index]['FlatId'].length > 1 ? FlatsData[index]['FlatId'] : '0' + FlatsData[index]['FlatId'] }</h5>
                   <div class="fs-5 card-text">
@@ -652,7 +701,7 @@ $(function ()
                         <i class="fa-solid fa-dollar-sign"></i>
                       </div>
                       <div class="col-3 col-lg-8">
-                        <span>${FlatsData[index]['Price']}</span>
+                        <span ${isClient ? `class = "text-decoration-line-through"` : ''}>${FlatsData[index]['Price']}</span>
                       </div>
                       <div class="col-12 mt-2">
                         ${
@@ -678,8 +727,9 @@ $(function ()
               </div>
             </div>
             <div class="card-footer">
-              <a href="single-flat.php?FloorId=${FlatsData[index]['FloorId']}&FlatId=${FlatsData[index]['FlatId']}" class="btn hvr-icon-back shadow-none"><i class="fas fa-arrow-circle-left hvr-icon mx-2"></i>${Word.MoreDetails}</a>
+              <a href="single-flat.php?FloorId=${FlatsData[index]['FloorId']}&FlatId=${FlatsData[index]['FlatId']}" class="btn hvr-wobble-bottom shadow-none more">${Word.MoreDetails}</a>
             </div>
+            ${isClient ? `<span class="position-absolute fs-6 d-flex justify-content-center align-items-center overflow-hidden badge Offers"></span>` : ''}
           </div>
         </div>`
       );
@@ -700,7 +750,7 @@ $(function ()
       labels: {
           placeholder: Word.Search,
           perPage: Word.Show + `
-              <select class="dt-selector"><option value="5" selected="">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select>
+          <select class="dt-selector"><option value="5" selected="">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select>
           ` + Word.ElemnetsOnEachPage,
           noRows: Word.ThereAreNoResult,
           info: Word.Show + " {start} " + Word.From + " {end} " + Word.OutOf + " {rows} " + Word.Records,
@@ -798,15 +848,14 @@ $(function ()
     });
     
     PutDataOnSelect($('#FeatureName').val());
-
     $('.table-responsive').remove();
     if (FlatFeatureData.length > 0) 
     {
       $.each(FlatFeatureData, function (indexInArray) 
       { 
-        data += `<tr><td>${Word[FlatFeatureData[indexInArray].FeatureName]}
-        </td><td>${FlatFeatureData[indexInArray].Details}
-        </td><td>${FlatFeatureData[indexInArray].Quantity}
+        data += `<tr><td>${Word[FlatFeatureData[indexInArray].FeatureName]}</td>
+        <td>${FlatFeatureData[indexInArray].Details}</td>
+        <td>${FlatFeatureData[indexInArray].Quantity}</td>
         ${
           UserType == 'Admin' ? `</td><td><a class="DeleteAnyFeatureFromFlat text-danger" role="botton" data-id="${indexInArray}" data-bs-toggle="modal" data-bs-target="#confirmTheDelete" aria-label="${Word.Delete}" data-balloon-nofocus data-balloon-pos="up"><i class="fas fa-trash-alt fs-6"></i></a></td></tr>` : ''
         }`
@@ -876,7 +925,7 @@ $(function ()
   /**
     * Function For Read More
   */
-   $('#btnReadMore').on('click', function() {
+  $('#btnReadMore').on('click', function() {
     var dots = document.getElementById("dots"),
     moreText = document.getElementById("more"),
     btnText = document.getElementById("btnReadMore");
@@ -1066,6 +1115,21 @@ $(function ()
   /**
     * Display Image For Logo
   */
+  $('#settingsForm').submit(function(e)
+  {
+    e.preventDefault();
+    var data = new FormData($(this)[0]);
+    data.append("EditProfile", "");
+    var response = SendRequest("POST", data);
+    response.done(function () 
+    {
+      location.reload();
+    });
+  });
+
+  /**
+    * Display Image For Logo
+  */
   $('#CustomAccountImage').on('click', function () 
   {
     $('#AccountImage').click();
@@ -1247,6 +1311,7 @@ $(function ()
         </div>`);
       });
       FileDropzone.removeAllFiles();
+      $('#SuccessfullySettings').toast('show')
     });
   });
 
@@ -1296,7 +1361,8 @@ $(function ()
   $('.table-customize-feature').on('click', 'tr td .EditAnyFeature', function()
   {
     HotelFeatureId = $(this).parent().siblings().first().text();
-    $('#FeatureName').attr('disabled', 'disabled').val(($(this).parent().siblings().first().next().text() == Word.Room ? 1 : ($(this).parent().siblings().first().next().text() == Word.Bath ? 2 : ($(this).parent().siblings().first().next().text() == Word.Bed ? 3 : ($(this).parent().siblings().first().next().text() == Word.TV ? 4 : ($(this).parent().siblings().first().next().text() == Word.AC ? 5 : ($(this).parent().siblings().first().next().text() == Word.Stove ? 6 : ($(this).parent().siblings().first().next().text() == Word.Oven ? 7 : ($(this).parent().siblings().first().next().text() == Word.Fridge ? 8 : ($(this).parent().siblings().first().next().text() == Word.Laundry ? 9 : 10)))))))))).change();
+    var featurename = $(this).parent().siblings().first().next().text();
+    $('#FeatureName').attr('disabled', 'disabled').val((featurename == Word.Room ? '1' : (featurename == Word.Bath ? '2' : (featurename == Word.Bed ? '3' : (featurename == Word.TV ? '4' : (featurename == Word.AC ? '5' : (featurename == Word.Stove ? '6' : (featurename == Word.Oven ? '7' : (featurename == Word.Fridge ? '8' : (featurename == Word.Laundry ? '9' : '10')))))))))).change();
     Id = $('#FeatureName').val();
     $('#Price').val($(this).parent().siblings().last().prev().text());
     $('#Details').val($(this).parent().siblings().last().prev().prev().text());
@@ -1345,7 +1411,7 @@ $(function ()
       }
       else 
       {
-        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger bg-black text-light" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisFeatureIsExsist + '</div></div>').insertBefore('#AddEditFeatureTemplate')
+        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 Error border-danger" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisFeatureIsExsist + '</div></div>').insertBefore('#AddEditFeatureTemplate')
       }
     });
   });
@@ -1370,7 +1436,7 @@ $(function ()
       }
       else
       {
-        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger bg-black text-light" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.TheFeatureUsedInTheFlatCannotBeDeleted + '</div></div>').insertBefore('#DeleteFeatureTemplate');
+        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger Error" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.TheFeatureUsedInTheFlatCannotBeDeleted + '</div></div>').insertBefore('#DeleteFeatureTemplate');
       }
     });
   });
@@ -1529,8 +1595,8 @@ $(function ()
     if (FeatureType.Room > 0 && FeatureType.Bath > 0 && FeatureType.Bed > 0) 
     {
       // Create an FormData object
-      var data = new FormData($('#FormNewFlat')[0]);
-      data.append("AddFlat", "");
+      var data = new FormData($(this)[0]);
+      data.append("AddNewFlat", "");
       // Get Floor Id From Breadcrumb Flats Page 
       data.append("FloorId", FloorId);
       $.each(FlatFeatureData, function (indexInArray) 
@@ -1539,17 +1605,9 @@ $(function ()
         data.append("Data[" + indexInArray + "][Quantity]", FlatFeatureData[indexInArray].Quantity);
       });
       var response = SendRequest("POST", data);
-      response.done(function (msg) 
+      response.done(function () 
       {
-        if (msg)
-        {
-          window.location = '/Daarna-Hotel/cpanel/admin/floors.php?Page=Flats&Id=' + FloorId;
-        }
-        else
-        {
-          $("html,body").animate({ scrollTop: 0 }, 0);
-          $('#FlatId').val('').focus();
-        }
+        window.location = '/Daarna-Hotel/cpanel/admin/floors.php?Page=Flats&Id=' + FloorId;
       });
     }
     else
@@ -1558,6 +1616,40 @@ $(function ()
     }
   });
 
+  
+  /**
+    * Select Input Date For Booking
+  */
+  $('#flatfeature #FlatId').blur(function()
+  {
+    FlatId = $(this).val();
+    if (FlatId < 1) 
+    {
+      $('#FlatId').attr({'pattern': false, 'title': Word.ValueMustBeGreaterThanOrEqualToOne});
+      $('#WarningFlatId0').toast('show');
+    }
+    else
+    {
+      var data = new FormData();
+      data.append("CheckFlatId", "");
+      data.append("FlatId", FlatId);
+      data.append("FloorId", FloorId);
+      var response = SendRequest("POST", data);
+      response.done(function (msg)
+      {
+        if (msg) 
+        {
+          $('#FlatId').attr({'pattern': false, 'title': Word.ThisFlatIdIsAlreadyExistOnThisFloor} );
+          $('#WarningFlatId1').toast('show');
+        }
+        else
+        {
+          $('#FlatId').removeAttr('pattern title');
+        }
+      });
+    }
+  });
+  
   /**
     * Requset Remove Flat
   */
@@ -1654,7 +1746,7 @@ $(function ()
       }
       else 
       {
-        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger bg-black text-light" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisUserNameIsExsist + '</div></div>').insertBefore('#AddEditEmployeesTemplate')
+        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger Error" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisUserNameIsExsist + '</div></div>').insertBefore('#AddEditEmployeesTemplate')
       }
     });
   });
@@ -1719,7 +1811,7 @@ $(function ()
       }
       else 
       {
-        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger bg-black text-light" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisServiceIsExsist + '</div></div>').insertBefore('#AddServiceTemplate')
+        $('<div class="alert alert-danger d-flex align-items-center alert-dismissible w-100 border-danger Error" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisServiceIsExsist + '</div></div>').insertBefore('#AddServiceTemplate')
       }
     });
     $('#ServiceName').val('');
@@ -1809,7 +1901,8 @@ $(function ()
       }
       else
       {
-        alert(Word.ThisFlatIdIsAlreadyExistOnThisFloor);
+        $('#ErrorEdit').toast('show');
+        // alert(Word.ThisFlatIdIsAlreadyExistOnThisFloor);
       }
     });
   });
@@ -1854,17 +1947,46 @@ $(function ()
   }
 
   /**
-    * Select Input Date For Booking
+    * Check UserName If Exist
   */
+  $('#User-Name').blur(function()
+  {
+    var data = new FormData();
+    data.append("CheckUserName", "");
+    data.append("UserName", $(this).val());
+    var response = SendRequest("POST", data);
+    response.done(function (msg)
+    {
+      if (msg) 
+      {
+        $('#User-Name').attr({'pattern': false, 'title': Word.ThisUserNameIsExist} );
+        $('#ErrorUserName').toast('show');
+      }
+      else
+      {
+        $('#User-Name').removeAttr('pattern title');
+      }
+    });
+  });
+
   $('#EntryDate').change(function()
   {
     $('#ExitDate').removeAttr('disabled');
     $('#ExitDate').val('');
   });
 
+  $('#ExitDate').change(function()
+  {
+    $('#overlapMessage').children().remove();
+    FinalPrice = DayPrice * (((new Date($(this).val()) - new Date($('#EntryDate').val())) / 1000 / 60 / 60 / 24) - 1);
+    $('#overlapMessage').append(`<div class='text-center fs-1'>${Word.FinalPrice}: ${FinalPrice}</div>`);
+  });
+
   $('#ExitDate').on('focus', function()
   {
-    $(this).attr('min', $('#EntryDate').val());
+    const date = new Date($('#EntryDate').val());
+    date.setDate(date.getDate() + 2);
+    $(this).attr('min', date.toISOString().split('T')[0]);
   });
 
   $('#FlatImages').change(function()
@@ -1933,14 +2055,14 @@ $(function ()
   $('#bookingForm').submit(function(e)
   {
     e.preventDefault();
-
+    $('#overlapMessage').children().remove();
     var OverLap = false;
-    events.forEach(element => {
-
+    events.forEach(element => 
+    {
       if (moment($('#EntryDate').val()).isBefore(element.end) && moment($('#ExitDate').val()).isAfter(element.start))
       {
         OverLap = true;
-        alert("This Date Is Overlapping With Another Date");
+        $('#overlapMessage').append('<div class="alert alert-danger d-flex align-items-center alert-dismissible Error border-danger" role="alert"><i class="fa-solid fa-ban text-danger mx-2 fs-4"></i><div>' + Word.ThisDateIsOverlappingWithAnotherDate + '</div></div>');
       }
     });
     if (!OverLap) 
@@ -1949,6 +2071,7 @@ $(function ()
       data.append("AddBooking", "");
       data.append("FloorId", FloorId);
       data.append("FlatId", FlatId);
+      data.append("FinalPrice", FinalPrice);
       var response = SendRequest("POST", data);
       response.done(function (msg)
       {
@@ -1958,11 +2081,9 @@ $(function ()
         }
         else
         {
-          alert("You Already Have An Account Please Login And Try Booking Again");
+          $('#overlapMessage').append('<div class="alert alert-warning d-flex align-items-center alert-dismissible Error border-warning px-3" role="alert"><i class="fa-solid fa-ban text-warning mx-2 fs-4"></i><div>' + Word.YouAlreadyHaveAnAccountPleaseLoginAndTryBookingAgain + '</div></div>');
         }
       });
     }
   });
-
-
 });

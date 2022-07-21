@@ -196,34 +196,16 @@
                 <div class="p-1">
                   <i class="fa-solid fa-dollar-sign fa-fw"></i>
                   <?php
-                    if (isset($_SESSION['Client'])) 
+                    if ($isClient)
                     {
-                      $GetClientDiscount = $con->prepare("SELECT Value FROM discounts WHERE ClientId = ? AND Start <= CURDATE() AND End >= CURDATE()");
-                      $GetClientDiscount->execute(array($_SESSION['ClientId']));
-                      if ($GetClientDiscount->rowCount() > 0) 
-                      {
-                        $Discount = $GetClientDiscount->fetchColumn();
-                        $FinalPrice = $Data['Price'] - ($Data['Price'] * $Discount);
-                        ?>
-                        <span class="ms-5"><?php echo $Data['Price'] . " => " . $FinalPrice ?> </span>
-                        <?php
-                      }
-                      else 
-                      {
-                        $FinalPrice = $Data['Price'];
-                        ?>
-                        <span class="ms-5"><?php echo $Data['Price'] ?></span>
-                        <?php
-                      }
+                      $FinalPrice = $Data['Price'] - ($Data['Price'] * $Discount);
                     }
-                    else 
+                    else
                     {
                       $FinalPrice = $Data['Price'];
-                      ?>
-                      <span class="ms-5"><?php echo $Data['Price'] ?></span>
-                      <?php
                     }
                   ?>
+                  <span class="ms-5" id="DayPrice"><?php echo $FinalPrice ?></span>
                 </div>
               </div>
               <div class="col-6 bgDark">
@@ -249,7 +231,7 @@
                 {
                   ?>
                   <div class="col-6 mt-2 d-flex align-items-center">
-                    <input type="file" class="form-control shadow-none" name="FlatImages[]" accept="image/webp" id="FlatImages" multiple hidden>
+                    <input type="file" class="form-control shadow-none" name="FlatImages[]" accept="image/*" id="FlatImages" multiple hidden>
                     <a class="AddImages text-success" id="AddImagesForFlat" role="botton" aria-label="<?php echo $lang['Add']; ?>" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-cloud-arrow-up fa-fw fs-4"></i></a>
                   </div>
                   <?php
@@ -259,13 +241,13 @@
             <div id="flatimages">
               <div class="containerMainImageAndDelete position-relative">
                 <img class="img-fluid" id="MainImage" src="photos/<?php echo $Data['MainImage'] ?>" />
-                <div class="MainImage position-absolute bottom-0 start-0 p-2"><i class="fa-solid fa-house fa-fw"></i></div>
+                <div class="MainImage position-absolute bottom-0 p-2 bg-opacity-75 bg-black"><i class="fa-solid fa-house fa-fw"></i></div>
                 <?php
                   if (isset($_SESSION['Admin']))
                   {
                     ?>
-                    <div class="EditMainImg position-absolute bottom-0 end-0 text-center">
-                      <input type="file" class="form-control shadow-none" name="FlatMainImage" accept="image/webp" id="FlatMainImage" hidden>
+                    <div class="EditMainImg position-absolute bottom-0 end-0 bg-opacity-75 bg-black">
+                      <input type="file" class="form-control shadow-none" name="FlatMainImage" accept="image/*" id="FlatMainImage" hidden>
                       <button type="button" class="btn text-success shadow-none" id="EditFlatMainImage" aria-label="<?php echo $lang['Edit']; ?>" data-balloon-nofocus data-balloon-pos="up"><i class="fas fa-edit fa-fw"></i></button>
                     </div>
                     <?php
@@ -283,7 +265,7 @@
                       if (COUNT($images) > 1 && isset($_SESSION['Admin'])) 
                       {
                         ?>
-                        <div class="RemoveImgFromFlat position-absolute bottom-0 end-0 text-center">
+                        <div class="RemoveImgFromFlat position-absolute bottom-0 end-0 bg-opacity-75 bg-black">
                           <button type="button" class="btn text-danger shadow-none removeFlatImage" id="<?php echo $image ?>" data-bs-toggle="modal" data-bs-target="#confirmimageDelete" aria-label="<?php echo $lang['Delete']; ?>" data-balloon-nofocus data-balloon-pos="up"><i class="fa-solid fa-trash fa-fw"></i></button>
                         </div>
                         <?php
@@ -330,6 +312,20 @@
               </div>
             </div>
             <!-- End Modal For Delete -->
+            <!-- Start Toast -->
+            <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
+              <div id="ErrorEdit" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <i class="fa-solid fa-circle-xmark fa-fw fs-5 text-danger"></i>
+                  <strong class="me-auto"><?php echo $lang['Error']; ?></strong>
+                  <button type="button" class="btn-close shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                  <?php echo $lang['ThisFlatIdIsAlreadyExistOnThisFloor']; ?>
+                </div>
+              </div>
+            </div>
+            <!-- End Toast -->
             <?php
           }
         ?>
@@ -421,26 +417,23 @@
                 ?>
                 <div class="col-md-6">
                   <label for="User-Name" class="form-label"><?php echo $lang['UserName']; ?></label>
-                  <input type="name" name="UserName" class="form-control" id="User-Name" placeholder="UserName" required>
+                  <input type="name" name="UserName" class="form-control" id="User-Name" placeholder="UserName" autocomplete="off" required>
                 </div>
                 <div class="col-md-6">
                   <label for="Pass" class="form-label"><?php echo $lang['Password']; ?></label>
-                  <input type="password" class="form-control" name="Password" id="Pass" minlength="8" placeholder="Password" required>
+                  <input type="password" class="form-control" name="Password" id="Pass" minlength="8" placeholder="Password" autocomplete="off" required>
                 </div>
                 <div class="col-md-6">
                   <label for="Phone" class="form-label"><?php echo $lang['Phone']; ?></label>
-                  <input type="tel" class="form-control" name="Phone" id="Phone" pattern="[0][9][0-9]{8}" placeholder="0990416940" required>
-                  <a tabindex="0" role="button" class="position-absolute Phone top-0 end-0 mt-3 mx-5" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Enter a valid phone number that works on the Syrian network">
-                    <i class="fas fa-info-circle"></i>
-                  </a>
+                  <input type="tel" class="form-control" name="Phone" id="Phone" pattern="[0][9][0-9]{8}" placeholder="0990416940" autocomplete="off" required>
                 </div>
                 <div class="col-md-6">
                   <label for="NationalId" class="form-label"><?php echo $lang['NationalId']; ?></label>
-                  <input type="number" class="form-control" name="NationalId" id="NationalId" min="01111111111" max="9999999999" placeholder="National Id" required>
+                  <input type="number" class="form-control" name="NationalId" id="NationalId" min="01111111111" max="9999999999" placeholder="National Id" autocomplete="off" required>
                 </div>
                 <div class="col-md-6">
                   <label for="Email" class="form-label"><?php echo $lang['Email']; ?></label>
-                  <input type="email" class="form-control" name="Email" id="Email" placeholder="Email" required>
+                  <input type="email" class="form-control" name="Email" id="Email" pattern="[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,4}$" placeholder="Email" autocomplete="off" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label"><?php echo $lang['IDImage']; ?></label>
@@ -452,7 +445,6 @@
                 <?php
               } 
             ?>
-            <input type="hidden" name="FinalPrice" value="<?php echo $FinalPrice; ?>" />
             <div class="col-md-6 mb-2">
               <div id='calendar'></div>
             </div>
@@ -463,10 +455,15 @@
                   <input type="date" class="form-control" name="EntryDate" id="EntryDate" onclick="this.min=new Date(Date.now() + 6.048e+8 ).toISOString().split('T')[0], this.showPicker()" required>
                 </div>
                 <div class="col-12">
-                  <label for="ExitDate" class="form-label"><?php echo $lang['ExitDate']; ?></label>
+                  <div class="position-relative">
+                    <label for="ExitDate" class="form-label"><?php echo $lang['ExitDate']; ?></label>
+                    <a tabindex="0" role="button" class="position-absolute CheckOut end-0 me-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="<?php echo $lang['CheckOutDateIsTheDayTheRoomReservationWillBeCanceled']; ?>">
+                      <i class="fas fa-info-circle"></i>
+                    </a>
+                  </div>
                   <input type="date" class="form-control" name="ExitDate" id="ExitDate" disabled onclick="this.showPicker()" required>
                 </div>
-                <div class="col-12 mt-5 d-flex justify-content-center">
+                <div class="col-12 my-5 d-flex justify-content-center">
                   <?php
                     if (isset($_SESSION['Client']))
                     {
@@ -483,38 +480,62 @@
                         else 
                         {
                           ?>
-                          <span class="btn btn-outline-info">asdfasdasd</span>
+                          <div class="alert alert-info d-flex align-items-center alert-dismissible Error border-info px-3" role="alert">
+                            <svg class="mx-2 text-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Info:">
+                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                            </svg>
+                            <div><?php echo $lang['PleaseWaitForThePreviousReservationToBeInstalled']; ?></div>
+                          </div>
                           <?php
                         }
                       }
                       else 
                       {
                         ?>
-                        <button type="submit" class="btn btn-outline-success hvr-grow"><i class="fas fa-check-double align-middle"></i> <?php echo $lang['BookingNow']; ?></button>
+                        <button type="submit" class="btn btn-outline-success hvr-grow shadow-none"><i class="fas fa-check-double align-middle"></i> <?php echo $lang['BookingNow']; ?></button>
                         <?php
                       }
                     }
                     else 
                     {
                       ?>
-                      <button type="submit" class="btn btn-outline-success hvr-grow" <?php echo COUNT($_SESSION) > 0 ? 'disabled' : '' ?>><i class="fas fa-check-double align-middle"></i> <?php echo $lang['BookingNow']; ?></button>
+                      <button type="submit" class="btn btn-outline-success hvr-grow shadow-none" <?php echo COUNT($_SESSION) > 0 ? 'disabled' : '' ?>><i class="fas fa-check-double align-middle"></i> <?php echo $lang['BookingNow']; ?></button>
                       <?php
                     }
                   ?>
                 </div>
+                <!-- Start alert -->
+                <div class="col-12" id="overlapMessage">
+                </div>
+                <!-- End alert -->
               </div>
             </div>
           </div>
         </form>
+        <!-- Start Toast -->
+        <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
+          <div id="ErrorUserName" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <i class="fa-solid fa-circle-xmark fa-fw fs-5 text-danger"></i>
+              <strong class="me-auto"><?php echo $lang['Error']; ?></strong>
+              <button type="button" class="btn-close shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <?php echo $lang['ThisUserNameIsExist']; ?>
+            </div>
+          </div>
+        </div>
+        <!-- End Toast -->
       </div>
     </section>
     <!-- End Booking Now -->
     <!-- Start Flat Evaluation -->
-    <section class="section-flat-evaluation text-center my-3">
+    <section class="section-flat-evaluation text-center my-4 py-5">
       <div class="container">
         <h1 class="mb-3"><?php echo $lang['FlatRates'] ?></h1>
         <div class="flat-evaluation" style="height: 400px !important;">
           <?php
+            $ClientHasRate = 0;
             $GetClient = $con->prepare("SELECT clients.* FROM clients JOIN booking ON booking.ClientId = clients.ClientId JOIN evaluation ON booking.BookId = evaluation.BookId");
             $GetClient->execute();
             if ($GetClient->rowCount() > 0) 
@@ -522,48 +543,57 @@
               $Clients = $GetClient->fetchAll();
               foreach ($Clients as $Client) 
               {
-                ?>
-                <div class="overflow-auto" style="height: 400px !important;">
-                  <img src="photos/<?php echo $Client['AccountImage'] ?>" alt="avatar" class="mx-auto rounded-circle img-fluid h-25">
-                  <h4 class="mt-2"><?php echo $Client['UserName'] ?></h4>
-                  <div class="row mw-100">
-                    <?php
-                      $GetServicesRate = $con->prepare("SELECT services.ServiceName, evaluation.Value, evaluation.Note FROM booking JOIN evaluation ON booking.BookId = evaluation.BookId AND booking.ClientId = ? AND booking.FloorId = ? AND booking.FlatId = ? JOIN services ON services.ServiceId = evaluation.ServiceId");
-                      $GetServicesRate->execute(array($Client['ClientId'], $FloorId, $FlatId));
-                      $Rates = $GetServicesRate->fetchAll();
-                      foreach ($Rates as $Rate) 
-                      {
-                        ?>
-                        <div class="col-md-6 col-lg-4 mb-2">
-                          <div class="card mx-auto" style="width: 18rem;">
-                            <div class="card-body">
-                              <h5 class="card-title"><?php echo $Rate['ServiceName'] ?></h5>
-                              <h6 class="card-subtitle mb-2 text-muted">
-                              <i class="fa<?php echo $Rate['Value'] >= 1 ? ' text-warning' : 'r' ?> fa-star"></i>
-                              <i class="fa<?php echo $Rate['Value'] >= 2 ? ' text-warning' : 'r' ?> fa-star"></i>
-                              <i class="fa<?php echo $Rate['Value'] >= 3 ? ' text-warning' : 'r' ?> fa-star"></i>
-                              <i class="fa<?php echo $Rate['Value'] >= 4 ? ' text-warning' : 'r' ?> fa-star"></i>
-                              <i class="fa<?php echo $Rate['Value'] == 5 ? ' text-warning' : 'r' ?> fa-star"></i>
-                              </h6>
-                              <p class="card-text"><?php echo substr($Rate['Note'], 0, 49) ?>
-                                <span id="dots">...</span>
-                                <span id="more"><?php echo substr($Rate['Note'], 49) ?></span>
-                                <a id="btnReadMore"><?php echo $lang['ReadMore']; ?></a>
-                              </p>
+                $GetServicesRate = $con->prepare("SELECT services.ServiceName, evaluation.Value, evaluation.Note FROM booking JOIN evaluation ON booking.BookId = evaluation.BookId AND booking.ClientId = ? AND booking.FloorId = ? AND booking.FlatId = ? JOIN services ON services.ServiceId = evaluation.ServiceId");
+                $GetServicesRate->execute(array($Client['ClientId'], $FloorId, $FlatId));
+                if ($GetServicesRate->rowCount() > 0) 
+                {
+                  $Rates = $GetServicesRate->fetchAll();
+                  $ClientHasRate++;
+                  ?>
+                  <div class="overflow-auto" style="height: 400px !important;">
+                    <img src="photos/<?php echo $Client['AccountImage'] ?>" alt="avatar" class="mx-auto rounded-circle img-fluid h-25">
+                    <h4 class="mt-2"><?php echo $Client['UserName'] ?></h4>
+                    <div class="row mw-100">
+                      <?php
+                        foreach ($Rates as $Rate) 
+                        {
+                          ?>
+                          <div class="col-md-6 col-lg-4 mb-2">
+                            <div class="card mx-auto" style="width: 18rem;">
+                              <div class="card-body">
+                                <h5 class="card-title"><?php echo $Rate['ServiceName'] ?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                <i class="fa<?php echo $Rate['Value'] >= 1 ? ' text-warning' : 'r' ?> fa-star"></i>
+                                <i class="fa<?php echo $Rate['Value'] >= 2 ? ' text-warning' : 'r' ?> fa-star"></i>
+                                <i class="fa<?php echo $Rate['Value'] >= 3 ? ' text-warning' : 'r' ?> fa-star"></i>
+                                <i class="fa<?php echo $Rate['Value'] >= 4 ? ' text-warning' : 'r' ?> fa-star"></i>
+                                <i class="fa<?php echo $Rate['Value'] == 5 ? ' text-warning' : 'r' ?> fa-star"></i>
+                                </h6>
+                                <p class="card-text"><?php echo substr($Rate['Note'], 0, 49) ?>
+                                  <span id="dots">...</span>
+                                  <span id="more"><?php echo substr($Rate['Note'], 49) ?></span>
+                                  <a id="btnReadMore"><?php echo $lang['ReadMore']; ?></a>
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <?php
-                      }
-                    ?>
+                          <?php
+                        }
+                      ?>
+                    </div>
                   </div>
-                </div>
-                <?php
+                  <?php
+                }
               }
             }
-            else 
+            if ($ClientHasRate == 0) 
             {
-              echo "NO Rate ";
+              ?>
+              <div class="fs-4">
+                <img class="mx-auto img-fluid" src="/DAARNA-HOTEL/photos/review1.png">
+                <?php echo $lang['NoRatingYet']; ?>
+              </div>
+              <?php
             }
           ?>
         </div>

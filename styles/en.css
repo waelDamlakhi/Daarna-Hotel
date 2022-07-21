@@ -1,0 +1,30 @@
+body { font-family: 'Almarai', 'sans-serif'; }
+
+.dropdown-item:hover, .dropdown-item:focus { padding-left:25px }
+
+.ImgLogIn { margin-left: 0 !important;}
+
+.Offers { left: -10px; }
+
+.Offers::before { transform: rotate(-45deg) translateY(-15px); }
+
+.Offers::after { left: 0; }
+
+.dt-pagination ul{ padding-left:0 }
+
+.dt-pagination a,.dt-pagination span{ float:left; margin-left:2px; }
+
+.dt-table>thead>tr>th,.dt-table>thead>tr>td{ text-align:left; }
+
+.dt-table th.dt-sorter::before,.dt-table th.dt-sorter::after{ right:7px; border-left:4px solid transparent; border-right:4px solid transparent; }
+
+#scroll-top { right: 15px;}
+
+.statsAdmin .icon {right: 0;}
+
+.SectionFlatsShow .more::after,
+.statsAdmin a::after { 
+  content: '\f0a9';
+  font: var(--fa-font-solid);
+  margin-left: 8px;
+}

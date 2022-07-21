@@ -57,7 +57,6 @@
     <script src='/Daarna-Hotel/scripts/wow.min.js'></script>
     <script src='/Daarna-Hotel/scripts/slick.min.js'></script>
     <script src='/Daarna-Hotel/scripts/moment.min.js'></script>
-    <!-- <script src='/Daarna-Hotel/scripts/fullCalendar.min.js'></script> -->
     <script src='/Daarna-Hotel/scripts/main.min.js'></script>
     <script>new WOW().init();</script>
     <script src='/Daarna-Hotel/scripts/new.js'></script>

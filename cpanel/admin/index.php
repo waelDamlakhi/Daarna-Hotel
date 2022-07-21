@@ -25,7 +25,7 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="card my-4 mx-auto px-2 " style="max-width: 18rem;">
               <div class="card-header p-2 d-flex justify-content-end position-relative">
-                <div class="icon position-absolute rounded p-4" style="background-color: #E426D5; top: -30px; right:0px">
+                <div class="icon position-absolute rounded p-4" style="background-color: #E426D5; top: -30px;">
                   <i class="fa fa-building fa-3x fa-fw"></i>
                 </div>
                 <h5 class="card-title m-0 me-auto">
@@ -36,14 +36,14 @@
                 </h5>
               </div>
               <div class="card-footer bg-transparent">
-                <a href="floors.php" class="btn hvr-icon-back shadow-none"><i class="fas fa-arrow-circle-left hvr-icon mx-2"></i><?php echo $lang['MoreDetails']; ?></a>
+                <a href="floors.php" class="btn hvr-bounce-in shadow-none"><?php echo $lang['MoreDetails']; ?></a>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card my-4 mx-auto px-2 " style="max-width: 18rem;">
               <div class="card-header p-2 d-flex justify-content-end position-relative">
-                <div class="icon position-absolute rounded p-4" style="background-color: #ffa726; top: -30px; right:0px">
+                <div class="icon position-absolute rounded p-4" style="background-color: #ffa726; top: -30px;">
                   <i class="fas fa-tasks fa-3x fa-fw"></i>
                 </div>
                 <h5 class="card-title m-0 me-auto">
@@ -54,14 +54,14 @@
                 </h5>
               </div>
               <div class="card-footer bg-transparent">
-                <a href="features.php" class="btn hvr-icon-back shadow-none"><i class="fas fa-arrow-circle-left hvr-icon mx-2"></i><?php echo $lang['MoreDetails']; ?></a>
+                <a href="features.php" class="btn hvr-bounce-in shadow-none"><?php echo $lang['MoreDetails']; ?></a>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card my-4 mx-auto px-2 " style="max-width: 18rem;">
               <div class="card-header p-2 d-flex justify-content-end position-relative">
-                <div class="icon position-absolute rounded p-4" style="background-color: #66bb6a; top: -30px; right:0px">
+                <div class="icon position-absolute rounded p-4" style="background-color: #66bb6a; top: -30px;">
                   <i class="fas fa-list-ul fa-3x fa-fw"></i>
                 </div>
                 <h5 class="card-title m-0 me-auto">
@@ -72,14 +72,14 @@
                 </h5>
               </div>
               <div class="card-footer bg-transparent">
-                <a href="services.php" class="btn hvr-icon-back shadow-none"><i class="fas fa-arrow-circle-left hvr-icon mx-2"></i><?php echo $lang['MoreDetails']; ?></a>
+                <a href="services.php" class="btn hvr-bounce-in shadow-none"><?php echo $lang['MoreDetails']; ?></a>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card my-4 mx-auto px-2 " style="max-width: 18rem;">
               <div class="card-header p-2 d-flex justify-content-end position-relative">
-                <div class="icon position-absolute rounded p-4 bg-info" style="top: -30px; right:0px">
+                <div class="icon position-absolute rounded p-4 bg-info" style="top: -30px;">
                   <i class="fas fa-user-tie fa-3x"></i>
                 </div>
                 <h5 class="card-title m-0 me-auto">
@@ -90,14 +90,14 @@
                 </h5>
               </div>
               <div class="card-footer bg-transparent">
-                <a href="employees.php" class="btn hvr-icon-back shadow-none"><i class="fas fa-arrow-circle-left hvr-icon mx-2"></i><?php echo $lang['MoreDetails']; ?></a>
+                <a href="employees.php" class="btn hvr-bounce-in shadow-none"><?php echo $lang['MoreDetails']; ?></a>
               </div>
             </div>
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card my-4 mx-auto px-2" style="max-width: 18rem;">
               <div class="card-header p-2 d-flex justify-content-end position-relative">
-                <div class="icon position-absolute rounded p-4" style="background-color: #5740ec; top: -30px; right:0px">
+                <div class="icon position-absolute rounded p-4" style="background-color: #5740ec; top: -30px;">
                   <i class="fas fa-users fa-3x fa-fw"></i>
                 </div>
                 <h5 class="card-title m-0 me-auto">
@@ -108,7 +108,7 @@
                 </h5>
               </div>
               <div class="card-footer bg-transparent">
-                <a href="#" class="btn hvr-icon-back shadow-none"><i class="fas fa-arrow-circle-left hvr-icon mx-2"></i><?php echo $lang['MoreDetails']; ?></a>
+                <a href="clients.php" class="btn hvr-bounce-in shadow-none"><?php echo $lang['MoreDetails']; ?></a>
               </div>
             </div>
           </div>

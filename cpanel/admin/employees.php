@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-12">
                       <div class="form-floating m-1">
-                        <input type="password" class="form-control" name="Password" id="Password" minlength="8" placeholder="Password" required>
+                        <input type="password" class="form-control" name="Password" id="Password" minlength="8" placeholder="Password" autocomplete="off" required>
                         <label for="Password"><i class="fas fa-user-lock me-1"></i><?php echo $lang['Password']; ?></label>
                       </div>
                     </div>

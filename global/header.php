@@ -1,25 +1,42 @@
 <!DOCTYPE html>
-  <html lang='en' <?php echo isset($_COOKIE['lang']) ? 'dir="rtl"' : '' ?>>
+  <html <?php echo isset($_COOKIE['lang']) ? 'dir="rtl" lang="ar"' : 'lang="en"' ?>>
     <head>
       <title><?php echo $PageName; ?></title>
       <meta charset='UTF-8'>
       <meta name="description" content="Mary's simple recipe for maple bacon donuts makes a sticky, sweet treat with just a hint of salt that you'll keep coming back for.">
       <meta name='viewport' content='width=device-width, initial-scale=1'>
-      <link rel="icon" href="/Daarna-Hotel/photos/logo.webp">
+      <link rel="icon" href="/Daarna-Hotel/photos/logo.webp" type="image/x-icon">
       <link rel='stylesheet' href='/Daarna-Hotel/styles/bootstrap<?php echo isset($_COOKIE['lang']) ? '.rtl' : '' ?>.min.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/balloon.min.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/all.min.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/hover-min.css' media="all">
       <link rel='stylesheet' href='/Daarna-Hotel/styles/animate.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/main.css'>
+      <link rel='stylesheet' href='/Daarna-Hotel/styles/<?php echo isset($_COOKIE['lang']) ? 'ar' : 'en' ?>.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/dropzone.min.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/slick.min.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/slick-theme.min.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/bootstrap-icons.css'>
       <link rel='stylesheet' href='/Daarna-Hotel/styles/main.min.css'>
       <link rel="preconnect" href="https://fonts.gstatic.com">
+      <?php
+        if ($isClient)
+        {
+          ?>
+          <style> .Offers::before {content: '<?php echo $lang['Sale'] . ' ' . ($Discount * 100) . '%' ?>';}</style>
+          <?php
+        }
+      ?>
     </head>
-    <body id="<?php echo $Page; ?>">
+    <body id="<?php echo $Page; ?>" <?php echo isset($_COOKIE['lang']) ? 'dir="rtl"' : '' ?>>
+      <!-- Start Section Loading -->
+      <div class="loading-overlay">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+      <!-- End Section Loading -->
       <!-- Start Digital Signature -->
       <div id='MyMark' class="position-fixed start-0 top-0 text-black-50">
         Aya Tammam
@@ -55,7 +72,7 @@
                   <?php echo $lang['Language']; ?>
                 </a>
                 <ul class="dropdown-menu mt-0" aria-labelledby="LanguageDropdownMenu" style="border-top-left-radius: 0; border-top-right-radius: 0;">
-                  <li><a class="dropdown-item <?php echo !isset($_COOKIE['lang']) ? 'active' : '' ?>" role="button" id="en"><img src="/Daarna-Hotel/photos/SVG/usa.png" alt="USA" class="me-2" style="width: 25px;"><?php echo $lang['English']; ?></a></li>
+                  <li><a class="dropdown-item <?php echo !isset($_COOKIE['lang']) ? 'active' : '' ?>" role="button" id="en" ><img src="/Daarna-Hotel/photos/SVG/usa.png" alt="USA" class="me-2" style="width: 25px;"><?php echo $lang['English']; ?></a></li>
                   <li><a class="dropdown-item <?php echo isset($_COOKIE['lang']) ? 'active' : '' ?>" role="button" id="ar"><img src="/Daarna-Hotel/photos/SVG/syria.png" alt="Syria" class="me-2" style="width: 25px;"><?php echo $lang['Arabic']; ?></a></li>
                 </ul>
               </li>
@@ -123,8 +140,7 @@
                 <a href="/Daarna-Hotel/cpanel/admin/employees.php" class="nav-link p-3 <?php echo $Page == 'Employees' ? 'active' : ''; ?>">
                   <i class="fas fa-user-tie fa-fw align-middle mx-3"></i> <?php echo $lang['Employees']; ?>
                 </a>
-                <a href="#" class="nav-link p-3 <?php 
-                  // echo $obj->getBody() == 'dashboard' ? 'active' : ''; ?>"> <!-- add offer -->
+                <a href="/Daarna-Hotel/cpanel/admin/clients.php" class="nav-link p-3 <?php echo $Page == 'Clients' ? 'active' : ''; ?>"> <!-- add offer -->
                   <i class="fas fa-users fa-fw align-middle mx-3"></i> <?php echo $lang['Clients']; ?>
                 </a>
                 <!-- Start Accordion -->
@@ -147,22 +163,32 @@
                     </div>
                   </div>
                 </div>
+                <!-- End Accordion -->
                 <?php
               }
               elseif (isset($_SESSION['Reception'])) 
               {
-                # code...
+                ?>
+                <a href="/Daarna-Hotel/cpanel/reception/index.php" class="nav-link p-3 <?php echo $Page == 'ControlPanel' ? 'active' : ''; ?>">
+                  <i class="fa fa-chart-bar fa-fw align-middle mx-3"></i> <?php echo $lang['ControlPanel']; ?>
+                </a>
+                <a href="/Daarna-Hotel/cpanel/settings.php?Page=MyProfile" class="nav-link p-3 <?php echo $Page == 'MyProfile' ? 'active' : ''; ?>">
+                  <i class="fa-solid fa-id-card fa-fw align-middle mx-3"></i> <?php echo $lang['MyProfile']; ?>
+                </a>
+                <?php
               }
               elseif (isset($_SESSION['Client'])) 
               {
                 ?>
-                <a href="/Daarna-Hotel/cpanel/client/index.php" class="nav-link p-3 <?php echo $Page == 'ControlPanel' ? 'active' : ''; ?>">
-                  <i class="fa fa-chart-bar fa-fw align-middle mx-3"></i> <?php echo $lang['ControlPanel']; ?>
+                <a href="/Daarna-Hotel/cpanel/client/index.php" class="nav-link p-3 <?php echo $Page == 'MyReservations' ? 'active' : ''; ?>">
+                  <i class="fa-solid fa-book-open fa-fw align-middle mx-3"></i> <?php echo $lang['MyReservations']; ?>
+                </a>
+                <a href="/Daarna-Hotel/cpanel/settings.php?Page=MyProfile" class="nav-link p-3 <?php echo $Page == 'MyProfile' ? 'active' : ''; ?>">
+                  <i class="fa-solid fa-id-card fa-fw align-middle mx-3"></i> <?php echo $lang['MyProfile']; ?>
                 </a>
                 <?php
               }
               ?>
-              <!-- End Accordion -->
             </div>
             <footer class="offcanvas-footer">
               <a href="/Daarna-Hotel/logout.php" class="nav-link">

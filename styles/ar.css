@@ -1,0 +1,32 @@
+body { font-family: 'Cairo', 'sans-serif'; }
+
+.dropdown-item:hover, .dropdown-item:focus { padding-right:25px }
+
+.ImgLogIn { margin-right: 0 !important;}
+
+.Offers { right: -10px; }
+
+.Offers::before { transform: rotate(45deg) translateY(-15px);}
+
+.Offers::after { right: 0; }
+
+.dt-top .dt-selector, .dt-bottom .dt-selector{ padding:0 !important;}
+
+.dt-pagination ul{ padding-right:0 }
+
+.dt-pagination a,.dt-pagination span{ float:right; margin-right:2px; }
+
+.dt-table>thead>tr>th,.dt-table>thead>tr>td{ text-align:right; }
+
+.dt-table th.dt-sorter::before,.dt-table th.dt-sorter::after{ left:7px; border-right:4px solid transparent; border-left:4px solid transparent; }
+
+#scroll-top { left: 15px;}
+
+.statsAdmin .icon {left: 0;}
+
+.SectionFlatsShow .more::after,
+.statsAdmin a::after { 
+  content: '\f0a8';
+  font: var(--fa-font-solid);
+  margin-right: 8px;
+}

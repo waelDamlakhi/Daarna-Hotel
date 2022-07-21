@@ -205,7 +205,7 @@
             <form class="row was-validated FormNewFlat" id="FormNewFlat">
               <div class="col-6 mb-2">
                 <label for="FlatId" class="form-label"><?php echo $lang['FlatId']; ?></label>
-                <input type="number" name="FlatId" class="form-control" id="FlatId" min="1" placeholder="0" autocomplete="off" required>
+                <input type="text" name="FlatId" class="form-control" id="FlatId" placeholder="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" autocomplete="off" required>
               </div>
               <div class="col-6 mb-2">
                 <label for="FlatArea" class="form-label"><?php echo $lang['FlatArea']; ?></label>
@@ -227,14 +227,14 @@
               <div class="col-6">
                 <label class="form-label"><?php echo $lang['MainImage']; ?></label>
                 <div class="input-group">
-                  <input type="file" class="form-control" name="MainImage" accept="image/webp" id="MainImage" required>
+                  <input type="file" class="form-control" name="MainImage" accept="image/*" id="MainImage" required>
                   <label class="input-group-text uploadImg px-3" for="MainImage"><i class="fas fa-upload" aria-hidden="true"></i></label>
                 </div>
               </div>
               <div class="col-12 lineBeforFeature">
                 <label class="form-label"><?php echo $lang['OtherImage']; ?></label>
                 <div class="input-group">
-                  <input type="file" class="form-control" name="OtherImage[]" id="OtherImage" accept="image/webp" multiple required>
+                  <input type="file" class="form-control" name="OtherImage[]" id="OtherImage" accept="image/*" multiple required>
                   <label class="input-group-text uploadImg px-3" for="OtherImage"><i class="fas fa-upload" aria-hidden="true"></i></label>
                 </div>
               </div>
@@ -245,6 +245,34 @@
                 <button class="btn btn-success hvr-pulse-grow shadow-none" type="submit" id="BottomAddFlat" aria-label="<?php echo $lang['AddFlat']; ?>" data-balloon-nofocus data-balloon-pos="up"><?php echo $lang['Add']; ?></button>
               </div>
             </form>
+            <!-- Start Toast -->
+            <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 11">
+              <div id="WarningFlatId0" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <i class="fa-solid fa-circle-exclamation fa-fw fs-5 text-warning"></i>
+                  <strong class="me-auto"><?php echo $lang['Warning']; ?></strong>
+                  <button type="button" class="btn-close shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                  <?php echo $lang['ValueMustBeGreaterThanOrEqualToOne']; ?>
+                </div>
+              </div>
+            </div>
+            <!-- End Toast -->
+            <!-- Start Toast -->
+            <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 11">
+              <div id="WarningFlatId1" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <i class="fa-solid fa-circle-exclamation fa-fw fs-5 text-warning"></i>
+                  <strong class="me-auto"><?php echo $lang['Warning']; ?></strong>
+                  <button type="button" class="btn-close shadow-none" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                  <?php echo $lang['ThisFlatIdIsAlreadyExistOnThisFloor']; ?>
+                </div>
+              </div>
+            </div>
+            <!-- End Toast -->
             <!-- End Form Add Flat -->
             <!-- Start Modal For Add Featuer To Flat -->
             <div class="modal fade ComfirmAddFeatureToFlat" id="ComfirmAddFeatureToFlat" data-bs-keyboard="false" tabindex="-1" aria-labelledby="AddFeatuerTitle" aria-hidden="true">
